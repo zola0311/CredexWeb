@@ -9,6 +9,8 @@ import { EmployeesService } from 'src/app/services/employeesServices/employees.s
 })
 export class EmployeesComponent implements OnInit {
   employees: Employees[];
+  displayedColumns: string[] = ['employeeId', 'name', 'job', 'valueStream', 'status', 'editRow', 'deleteRow'];
+  dataSource = null;
   constructor(private employeesService: EmployeesService) { }
 
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class EmployeesComponent implements OnInit {
       .subscribe(
         data => {
           this.employees = data;
+          this.dataSource = this.employees;
         },
         error => {
           console.log(error);
