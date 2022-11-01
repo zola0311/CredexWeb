@@ -18,7 +18,7 @@ export class EmployeesService {
   }
 
   get(id: any): Observable<Employees> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<Employees>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {
