@@ -18,7 +18,7 @@ export class AllowanceTypesService {
   }
 
   get(id: any): Observable<AllowanceTypes> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<AllowanceTypes>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {

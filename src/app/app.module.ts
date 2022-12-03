@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeesComponent } from './components/employeesComponents/employees/employees.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -50,18 +50,23 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HomePageComponent } from './components/homePage/home-page/home-page.component';
+import { LoadingDialogComponent } from './components/dialogs/loading-dialog/loading-dialog.component';
+import { EmployeeAddDialogComponent } from './components/dialogs/employee-add-dialog/employee-add-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeesComponent,
-    HomePageComponent
+    HomePageComponent,
+    LoadingDialogComponent,
+    EmployeeAddDialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatCheckboxModule,

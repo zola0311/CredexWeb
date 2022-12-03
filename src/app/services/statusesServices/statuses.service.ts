@@ -18,7 +18,7 @@ export class StatusesService {
   }
 
   get(id: any): Observable<Statuses> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<Statuses>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {

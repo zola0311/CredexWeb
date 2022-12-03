@@ -18,7 +18,7 @@ export class ValueStreamsService {
   }
 
   get(id: any): Observable<ValueStreams> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<ValueStreams>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {

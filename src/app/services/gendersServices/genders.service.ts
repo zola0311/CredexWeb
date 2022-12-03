@@ -18,7 +18,7 @@ export class GendersService {
   }
 
   get(id: any): Observable<Genders> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<Genders>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {

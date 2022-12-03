@@ -1,0 +1,33 @@
+.dialog-body {
+    margin-top: 10px;
+}
+.dialogSize {
+    width: 100%;
+}
+.segmentBorder {
+    border: solid;
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 10px;
+    border-color: purple;
+}
+.allowancesSegmentBorder {
+    border: solid 2px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-top: 10px;
+    border-color: purple;
+    margin-left: 50px;
+}
+.allowanceTable {
+    width: 100%;
+}
+.segment {
+    display: flex;
+}
+.legendTitle {
+    margin-bottom: 10px;
+}
+.field {
+    margin-left: 20px;
+}

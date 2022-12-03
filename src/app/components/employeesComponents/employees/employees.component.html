@@ -1,8 +1,8 @@
 <div>
     <h1>Munkavállalók</h1>
     <hr>
-    <button mat-raised-button color="primary" class="addNewEmployeeButton">
-        <mat-icon>person_add</mat-icon><span class="textIconPadding">Új munkavállaló hozzáadása</span>
+    <button mat-raised-button color="primary" class="addNewEmployeeButton" (click)="openAddNewEmployeeDialog()">
+        <mat-icon>person_add</mat-icon><span class="textIconPadding"></span>
     </button>
     <table mat-table [dataSource]="employees" class="mat-elevation-z8 employees-table">
         <ng-container matColumnDef="employeeId">
@@ -33,14 +33,21 @@
             <td mat-cell *matCellDef="let element"> {{element.statuses.name}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="editRow" class="tableButtonColumn">
+        <ng-container matColumnDef="editColumn" class="tableButtonColumn">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" class="tableButtonColumn"> <button mat-raised-button color="accent">
                     <mat-icon>edit</mat-icon>
                 </button> </td>
         </ng-container>
 
-        <ng-container matColumnDef="deleteRow" class="tableButtonColumn">
+        <ng-container matColumnDef="detailsColumn" class="tableButtonColumn">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" class="tableButtonColumn"> <button mat-raised-button color="accent">
+                    <mat-icon> list_alt</mat-icon>
+                </button> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="deleteColumn" class="tableButtonColumn">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element" class="tableButtonColumn"> <button mat-raised-button color="warn">
                     <mat-icon>delete</mat-icon>
@@ -50,4 +57,4 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div>
+</div> 

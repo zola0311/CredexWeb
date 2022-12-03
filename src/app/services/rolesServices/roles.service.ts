@@ -18,7 +18,7 @@ export class RolesService {
   }
 
   get(id: any): Observable<Roles> {
-    return this.http.get(`${baseUrl}/${id}`);
+    return this.http.get<Roles>(`${baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {
