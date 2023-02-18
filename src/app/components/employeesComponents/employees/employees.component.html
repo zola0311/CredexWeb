@@ -22,7 +22,6 @@
             <td mat-cell *matCellDef="let element"> {{element.jobs.name}} </td>
         </ng-container>
 
-
         <ng-container matColumnDef="valueStream">
             <th mat-header-cell *matHeaderCellDef> Terület </th>
             <td mat-cell *matCellDef="let element"> {{element.valueStreams.name}} </td>
@@ -57,4 +56,4 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-</div> 
+</div>

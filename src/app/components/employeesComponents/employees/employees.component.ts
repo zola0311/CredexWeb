@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
+import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceTypesViewModel/allowance-types-view-model.model';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
 import { EmployeeAddDialogComponent } from '../../dialogs/employee-add-dialog/employee-add-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
@@ -38,12 +39,17 @@ export class EmployeesComponent implements OnInit {
   }
 
   openAddNewEmployeeDialog(): void {
-    this.dialog.open(EmployeeAddDialogComponent, {
+    const dialogRef = this.dialog.open(EmployeeAddDialogComponent, {
       disableClose: true,
       width: '100%',
       height: '80%',
-      data: Employees
+      data: {employee: Employees, allowanceTypesViewModel: AllowanceTypesViewModel}
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result.allowanceTypesViewModel);
+      console.log(result.employee);
+    })
   }
 
   openLoadingDialog() {

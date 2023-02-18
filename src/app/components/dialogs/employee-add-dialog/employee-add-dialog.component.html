@@ -1,147 +1,228 @@
 <div class="dialogSize">
-    <h1 mat-dialog-title>Új munkavállaló hozzáadása</h1>
-    <mat-dialog-content class="dialog">
-        <div class="dialog-body">
-            <form [formGroup]="form">
-                <div class="segmentBorder">
-                    <legend class="legendTitle">
-                        <mat-label color="primary">Személyes adatok:</mat-label>
-                    </legend>
-                    <div class="segment">
-                        <mat-form-field class="field">
-                            <mat-label>Név*</mat-label>
-                            <input type="text" matInput formControlName="name" placeholder="Pl: Teszt Ernő" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Születési név*</mat-label>
-                            <input type="text" matInput formControlName="birthName" placeholder="Pl: Teszt Ernő" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Telefonszám*</mat-label>
-                            <input type="text" matInput formControlName="phoneNumber" placeholder="Pl: 0670123456" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Személyi igazolvány szám*</mat-label>
-                            <input type="text" matInput formControlName="indentityCardNumber"
-                                placeholder="Pl: 123456AB" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Anyja születési neve*</mat-label>
-                            <input type="text" matInput formControlName="nameOfMother" placeholder="Pl: Teszt Irén" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Neme*</mat-label>
-                            <mat-select formControlName="genderId">
-                                <mat-option [value]="null">Kérlek válassz...</mat-option>
-                                <mat-option *ngFor="let gender of genders" [value]="gender.id">
-                                    {{gender.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="segment">
-                        <mat-form-field class="field">
-                            <mat-label>Irányítószám*</mat-label>
-                            <input type="text" matInput formControlName="postalCode" placeholder="Pl: 4400" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Város*</mat-label>
-                            <input type="text" matInput formControlName="city" placeholder="Pl: Nyíregyháza" />
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Cím*</mat-label>
-                            <input type="text" matInput formControlName="address" placeholder="Pl: Nagy Imre tér 1." />
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="segmentBorder">
-                    <legend class="legendTitle">
-                        <mat-label color="primary">Céges adatok:</mat-label>
-                    </legend>
-                    <div class="segment">
-                        <mat-form-field class="field">
-                            <mat-label>Terület*</mat-label>
-                            <mat-select formControlName="valueStreamId" (selectionChange)="getJobsOfValueStream()">
-                                <mat-option [value]="null">Kérlek válassz...</mat-option>
-                                <mat-option *ngFor="let valueStream of valueStreams" [value]="valueStream.id">
-                                    {{valueStream.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Beosztás*</mat-label>
-                            <mat-select formControlName="valueStreamId">
-                                <mat-option [value]="null">Kérlek válassz...</mat-option>
-                                <mat-option *ngFor="let job of jobsOfValueStreams" [value]="job.id">
-                                    {{job.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="field">
-                            <mat-label>Státusz*</mat-label>
-                            <mat-select formControlName="statusId">
-                                <mat-option [value]="null">Kérlek válassz...</mat-option>
-                                <mat-option *ngFor="let status of statuses" [value]="status.id">
-                                    {{status.name}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <div class="allowancesSegmentBorder">
-                            <form [formGroup]="allowanceForm">
-                                <div class="segment">
-                                    <mat-form-field class="field">
-                                        <mat-label>Juttatás típusa*</mat-label>
-                                        <mat-select formControlName="name">
-                                            <mat-option [value]="null">Kérlek válassz...</mat-option>
-                                            <mat-option *ngFor="let allowance of allowanceTypes" [value]="allowance.id">
-                                                {{allowance.name}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
-                                    <mat-form-field class="field">
-                                        <mat-label>Érték*</mat-label>
-                                        <input type="text" matInput formControlName="value" placeholder="Pl: 400000" />
-                                    </mat-form-field>
-                                    <div class="field">
-                                        <button mat-mini-fab color="accent" (click)="addAllowancesToList()">
-                                            <mat-icon>add_circle</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div>
-                                <table *ngIf="addedAllowanceTypes?.length !== 0" mat-table [dataSource]="addedAllowanceTypes" class="mat-elevation-z8 allowanceTable">
-                                    <ng-container matColumnDef="name">
-                                        <th mat-header-cell *matHeaderCellDef> Juttatás típusa </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                    </ng-container>
-                            
-                            
-                                    <ng-container matColumnDef="value">
-                                        <th mat-header-cell *matHeaderCellDef> Érték </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.value}} </td>
-                                    </ng-container>
-
-                            
-                                    <ng-container matColumnDef="deleteColumn" class="tableButtonColumn">
-                                        <th mat-header-cell *matHeaderCellDef></th>
-                                        <td mat-cell *matCellDef="let element" class="tableButtonColumn"> <button mat-mini-fab color="warn">
-                                                <mat-icon>delete</mat-icon>
-                                            </button> </td>
-                                    </ng-container>
-
-                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                </table>    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+  <h1 mat-dialog-title>Új munkavállaló hozzáadása</h1>
+  <mat-dialog-content class="dialog">
+    <div class="dialog-body">
+      <form [formGroup]="form">
+        <div class="segmentBorder">
+          <legend class="legendTitle">
+            <mat-label color="primary">Személyes adatok:</mat-label>
+          </legend>
+          <div class="segment">
+            <div>
+              <mat-form-field class="field">
+                <mat-label>Név*</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="name"
+                  placeholder="Pl: Teszt Ernő"
+                />
+              </mat-form-field>
+              <div class="field" *ngIf="getControl.name.errors?.required">
+                <p class="errorLabel">Mező kitöltése kötelező.</p>
+              </div>
+            </div>
+            <mat-form-field class="field">
+              <mat-label>Születési név*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="birthName"
+                placeholder="Pl: Teszt Ernő"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Telefonszám*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="phoneNumber"
+                placeholder="Pl: 0670123456"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Személyi igazolvány szám*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="indentityCardNumber"
+                placeholder="Pl: 123456AB"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Anyja születési neve*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="nameOfMother"
+                placeholder="Pl: Teszt Irén"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Neme*</mat-label>
+              <mat-select formControlName="genderId">
+                <mat-option [value]="null">Kérlek válassz...</mat-option>
+                <mat-option *ngFor="let gender of genders" [value]="gender.id">
+                  {{ gender.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="segment">
+            <mat-form-field class="field">
+              <mat-label>Irányítószám*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="postalCode"
+                placeholder="Pl: 4400"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Város*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="city"
+                placeholder="Pl: Nyíregyháza"
+              />
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Cím*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="address"
+                placeholder="Pl: Nagy Imre tér 1."
+              />
+            </mat-form-field>
+          </div>
         </div>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-        <button mat-raised-button color="primary" mat-dialog-close><mat-icon>check</mat-icon></button>
-        <button mat-raised-button color="accent" mat-dialog-close><mat-icon>close</mat-icon></button>
-    </mat-dialog-actions>
+        <div class="segmentBorder">
+          <legend class="legendTitle">
+            <mat-label color="primary">Céges adatok:</mat-label>
+          </legend>
+          <div class="segment">
+            <mat-form-field class="field">
+              <mat-label>Terület*</mat-label>
+              <mat-select
+                formControlName="valueStreamId"
+                (selectionChange)="getJobsOfValueStream()"
+              >
+                <mat-option [value]="null">Kérlek válassz...</mat-option>
+                <mat-option
+                  *ngFor="let valueStream of valueStreams"
+                  [value]="valueStream.id"
+                >
+                  {{ valueStream.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Beosztás*</mat-label>
+              <mat-select formControlName="valueStreamId">
+                <mat-option [value]="null">Kérlek válassz...</mat-option>
+                <mat-option
+                  *ngFor="let job of jobsOfValueStreams"
+                  [value]="job.id"
+                >
+                  {{ job.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="field">
+              <mat-label>Státusz*</mat-label>
+              <mat-select formControlName="statusId">
+                <mat-option [value]="null">Kérlek válassz...</mat-option>
+                <mat-option *ngFor="let status of statuses" [value]="status.id">
+                  {{ status.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div class="allowancesSegmentBorder">
+              <div class="segment">
+                <mat-form-field class="field">
+                  <mat-label>Juttatás*</mat-label>
+                  <mat-select formControlName="allowanceTypeForAdd">
+                    <mat-option [value]="null">Kérlek válassz...</mat-option>
+                    <mat-option
+                      *ngFor="let allowance of allowanceTypes"
+                      [value]="allowance.id"
+                    >
+                      {{ allowance.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="field">
+                  <mat-label>Érték*</mat-label>
+                  <input
+                    type="text"
+                    formControlName="allowanceValueForAdd"
+                    matInput
+                    placeholder="Pl: 50000"
+                  />
+                </mat-form-field>
+                <button mat-mini-fab color="accent" (click)="addAllowance()">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+              </div>
+              <table
+                mat-table
+                #table
+                [dataSource]="addedAllowanceTypes"
+                *ngIf="this.addedAllowanceTypes.length > 0"
+                class="mat-elevation-z8 allowanceTable"
+              >
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef>Juttatás neve</th>
+                  <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                </ng-container>
+
+                <ng-container matColumnDef="value">
+                  <th mat-header-cell *matHeaderCellDef>Juttatás értéke</th>
+                  <td mat-cell *matCellDef="let element">
+                    {{ element.value }}
+                  </td>
+                </ng-container>
+
+                <ng-container
+                  matColumnDef="deleteColumn"
+                  class="tableButtonColumn"
+                >
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    class="tableButtonColumn"
+                  >
+                    <button
+                      mat-raised-button
+                      color="warn"
+                      (click)="deleteAllowance(element)"
+                    >
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr
+                  mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="addEmployee()">
+      <mat-icon>check</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
 </div>

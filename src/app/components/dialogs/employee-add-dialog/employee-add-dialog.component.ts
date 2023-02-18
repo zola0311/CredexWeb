@@ -1,6 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { element } from 'protractor';
+import { AddEmployeeInterface } from 'src/app/interfaces/add-employee-interface';
+import { AllowancesOfEmployees } from 'src/app/models/allowancesOfEmployeesModel/allowances-of-employees.model';
 import { AllowanceTypes } from 'src/app/models/allowanceTypesModel/allowance-types.model';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
 import { Genders } from 'src/app/models/gendersModel/genders.model';
@@ -21,46 +25,73 @@ import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.compone
   templateUrl: './employee-add-dialog.component.html',
   styleUrls: ['./employee-add-dialog.component.scss']
 })
+
 export class EmployeeAddDialogComponent implements OnInit {
   form: FormGroup;
-  allowanceForm: FormGroup;
   statuses: Statuses[];
   jobs: Jobs[];
   jobsOfValueStreams: Jobs[];
   valueStreams: ValueStreams[];
   genders: Genders[];
   allowanceTypes: AllowanceTypes[];
-  addedAllowanceTypes: AllowanceTypesViewModel[];
-  displayedColumns: string[] = ['name', 'value'];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: Employees, 
+  numberRegEx = /\-?\d*\.?\d{1,2}/;
+  addedAllowanceTypes: AllowanceTypesViewModel[] = [];
+  employee: Employees = {
+    employeeId: null,
+    name: '',
+    birthName: '',
+    phoneNumber: '',
+    indentityCardNumber: '',
+    genderId: null,
+    valueStreamId: null,
+    nameOfMother: '',
+    postalCode: null,
+    city: '',
+    address: '',
+    jobId: null,
+    statusId: null,
+    statuses: null,
+    allowanceOfEmployees: null,
+    genders: null,
+    valueStreams: null,
+    users: null,
+    jobs: null
+  }
+  displayedColumns: string[] = ['name', 'value', 'deleteColumn'];
+  @ViewChild(MatTable) table: MatTable<any>;
+  constructor(
   private formBuilder: FormBuilder,
-  private allowanceFormBuilder: FormBuilder, 
   private statusesService: StatusesService,
   private jobsService: JobsService,
   private valueStreamsService: ValueStreamsService,
   private gendersService: GendersService,
   private dialog: MatDialog,
   private allowanceOfEmployeesService: AllowancesOfEmployeesService,
-  private allowanceTypesService: AllowanceTypesService) {
+  private allowanceTypesService: AllowanceTypesService,
+  private addEmployeeDialogRef: MatDialogRef<EmployeeAddDialogComponent>,
+  @Inject(MAT_DIALOG_DATA) public data: AddEmployeeInterface) {
     this.form = this.formBuilder.group({
-      name: '',
-      birthName: '',
-      phoneNumber: '',
-      indentityCardNumber: '',
-      genderId: '',
-      valueStreamId: '',
-      nameOfMother: '',
-      postalCode: '',
-      city: '',
-      address: '',
-      jobId: '',
-      statusId: ''
-    });
-    this.allowanceForm = this.allowanceFormBuilder.group({
-      name: '',
-      value: null
+      name: ['', Validators.required],
+      birthName: ['', Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.pattern(this.numberRegEx)]],
+      indentityCardNumber: [null, Validators.required],
+      genderId: [null, Validators.required],
+      valueStreamId: [null, Validators.required],
+      nameOfMother: ['', Validators.required],
+      postalCode: [null, Validators.required],
+      city: ['', Validators.required],
+      address: ['', Validators.required],
+      jobId: [null, Validators.required],
+      statusId: [null, Validators.required],
+      allowanceTypeForAdd: '',
+      allowanceValueForAdd: '',
+      allowances: this.formBuilder.array([])
     });
    }
+
+   get getControl(){
+    return this.form.controls;
+  }
 
   ngOnInit(): void {
     this.getStatuses();
@@ -70,11 +101,31 @@ export class EmployeeAddDialogComponent implements OnInit {
     this.getAllowanceTypes();
   }
 
-  addAllowancesToList(): void {
-    let allowance: AllowanceTypesViewModel;
-    allowance.name = this.allowanceForm.controls.name.value;
-    allowance.value = this.allowanceForm.controls.value.value;
-    this.addedAllowanceTypes.push(allowance);
+  addEmployee(): void {
+    if(this.form.valid) {
+      this.employee.name = this.form.controls.name.value;
+      this.employee.birthName = this.form.controls.birthName.value;
+      this.employee.phoneNumber = this.form.controls.phoneNumber.value;
+      this.employee.indentityCardNumber = this.form.controls.indentityCardNumber.value;
+      this.employee.nameOfMother = this.form.controls.nameOfMother.value;
+      this.employee.genderId = this.form.controls.genderId.value;
+      this.employee.postalCode = this.form.controls.postalCode.value;
+      this.employee.city = this.form.controls.city.value;
+      this.employee.address = this.form.controls.address.value;
+      this.employee.valueStreamId = this.form.controls.valueStreamId.value;
+      this.employee.jobId = this.form.controls.jobId.value;
+      this.employee.statusId = this.form.controls.statusId.value;
+      this.data.employee = this.employee;
+      this.data.allowanceTypesViewModel = this.addedAllowanceTypes;
+      this.closeAddEmployeeDialog();
+    }
+    else {
+      Object.keys(this.form.controls).forEach(field => {
+        const control = this.form.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
+    }
+
   }
 
   getStatuses(): void {
@@ -137,20 +188,33 @@ export class EmployeeAddDialogComponent implements OnInit {
       );
   }
 
+  addAllowance() {
+    let allowance: AllowanceTypesViewModel = {
+      id: null,
+      name: null,
+      value: null
+    };
+    allowance.id = this.form.controls.allowanceTypeForAdd.value;
+    allowance.name = this.allowanceTypes.filter(x => x.id == this.form.controls.allowanceTypeForAdd.value).map(x => x.name).toString();
+    allowance.value = this.form.controls.allowanceValueForAdd.value;
+    this.addedAllowanceTypes.push(allowance);
+    this.table.renderRows();
+  }
+
+  deleteAllowance(row: any) {
+    const index = this.addedAllowanceTypes.indexOf(row, 0);
+
+    if(index > -1) {
+      this.addedAllowanceTypes.splice(index, 1);
+    }
+    this.table.renderRows();
+  }
+
   getJobsOfValueStream(): void {
     this.jobsOfValueStreams = this.jobs.filter(x => x.valueStreamId == this.form.controls.valueStreamId.value);
   }
 
-  openLoadingDialog() {
-    this.dialog.open(LoadingDialogComponent, {
-      disableClose: true,
-      data: {
-        message: 'Munkavállalói adatok betöltése...'
-      },
-    });
-  }
-
-  closeLoadingDialog() {
-    this.dialog.closeAll();
+  closeAddEmployeeDialog() {
+    this.addEmployeeDialogRef.close(this.data);
   }
 }
