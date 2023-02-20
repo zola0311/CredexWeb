@@ -36,6 +36,8 @@ export class EmployeeAddDialogComponent implements OnInit {
   allowanceTypes: AllowanceTypes[];
   numberRegEx = /\-?\d*\.?\d{1,2}/;
   addedAllowanceTypes: AllowanceTypesViewModel[] = [];
+  addedAllowancesIsNotNull: boolean = false;
+  submitted: boolean = false;
   employee: Employees = {
     employeeId: null,
     name: '',
@@ -55,7 +57,9 @@ export class EmployeeAddDialogComponent implements OnInit {
     genders: null,
     valueStreams: null,
     users: null,
-    jobs: null
+    jobs: null,
+    isLeader: false,
+    supervisorId: null
   }
   displayedColumns: string[] = ['name', 'value', 'deleteColumn'];
   @ViewChild(MatTable) table: MatTable<any>;
@@ -65,8 +69,6 @@ export class EmployeeAddDialogComponent implements OnInit {
   private jobsService: JobsService,
   private valueStreamsService: ValueStreamsService,
   private gendersService: GendersService,
-  private dialog: MatDialog,
-  private allowanceOfEmployeesService: AllowancesOfEmployeesService,
   private allowanceTypesService: AllowanceTypesService,
   private addEmployeeDialogRef: MatDialogRef<EmployeeAddDialogComponent>,
   @Inject(MAT_DIALOG_DATA) public data: AddEmployeeInterface) {
@@ -78,13 +80,15 @@ export class EmployeeAddDialogComponent implements OnInit {
       genderId: [null, Validators.required],
       valueStreamId: [null, Validators.required],
       nameOfMother: ['', Validators.required],
-      postalCode: [null, Validators.required],
+      postalCode: [null, [Validators.required, Validators.pattern(this.numberRegEx)]],
       city: ['', Validators.required],
       address: ['', Validators.required],
       jobId: [null, Validators.required],
       statusId: [null, Validators.required],
       allowanceTypeForAdd: '',
       allowanceValueForAdd: '',
+      isLeader: false,
+      superVisorId: null,
       allowances: this.formBuilder.array([])
     });
    }
@@ -102,7 +106,13 @@ export class EmployeeAddDialogComponent implements OnInit {
   }
 
   addEmployee(): void {
-    if(this.form.valid) {
+    this.submitted = true;
+    if(this.addedAllowanceTypes.length == 0) {
+      this.addedAllowancesIsNotNull = false;
+    } else {
+      this.addedAllowancesIsNotNull = true;
+    }
+    if(this.form.valid && this.addedAllowancesIsNotNull == true) {
       this.employee.name = this.form.controls.name.value;
       this.employee.birthName = this.form.controls.birthName.value;
       this.employee.phoneNumber = this.form.controls.phoneNumber.value;

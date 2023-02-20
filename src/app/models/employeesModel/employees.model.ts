@@ -19,6 +19,8 @@ export class Employees {
     address: string;
     jobId: number;
     statusId: number;
+    isLeader: boolean;
+    supervisorId: number;
     statuses: Statuses;
     allowanceOfEmployees: AllowancesOfEmployees[];
     jobs: Jobs;

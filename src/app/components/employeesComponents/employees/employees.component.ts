@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
 import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceTypesViewModel/allowance-types-view-model.model';
+import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
 import { EmployeeAddDialogComponent } from '../../dialogs/employee-add-dialog/employee-add-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
@@ -17,7 +18,7 @@ export class EmployeesComponent implements OnInit {
   dataSource = null;
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
-  constructor(private employeesService: EmployeesService, private dialog: MatDialog) { }
+  constructor(private employeesService: EmployeesService, private dialog: MatDialog, private allowancesOfEmployeesService: AllowancesOfEmployeesService) { }
 
   ngOnInit(): void {
     this.openLoadingDialog();
@@ -47,8 +48,21 @@ export class EmployeesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result.allowanceTypesViewModel);
-      console.log(result.employee);
+      const data = {
+        Name: result.employee.name,
+        BirthName: result.employee.birthName,
+        PhoneNumber: result.employee.phoneNumber,
+        IdentityCardNumber: result.employee.indentityCardNumber,
+        GenderId: result.employee.genderId,
+        ValueStreamId: result.employee.valueStreamId,
+        NameOfMother: result.employee.nameOfMother,
+        postalCode: result.employee.postalCode,
+        City: result.employee.city,
+        Address: result.employee.address,
+        JobId: result.employee.jobId,
+        StatusId: result.employee.statusId
+      }
+      console.log(data);
     })
   }
 
