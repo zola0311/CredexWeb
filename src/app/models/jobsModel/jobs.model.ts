@@ -5,6 +5,5 @@ export class Jobs {
     name: string;
     jobKey: string;
     salary: number;
-    valueStreamId: number;
     employees: Employees[];
 }

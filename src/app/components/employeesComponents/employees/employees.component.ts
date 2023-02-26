@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
+import { nextTick } from 'process';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
 import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceTypesViewModel/allowance-types-view-model.model';
 import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
@@ -14,14 +16,15 @@ import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dia
 })
 export class EmployeesComponent implements OnInit {
   employees: Employees[];
-  displayedColumns: string[] = ['employeeId', 'name', 'job', 'valueStream', 'status', 'editColumn', 'detailsColumn', 'deleteColumn'];
+  displayedColumns: string[] = ['employeeId', 'name', 'job', 'status', 'editColumn', 'detailsColumn', 'deleteColumn'];
   dataSource = null;
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
+  @ViewChild('table') table: MatTable<Employees>;
   constructor(private employeesService: EmployeesService, private dialog: MatDialog, private allowancesOfEmployeesService: AllowancesOfEmployeesService) { }
 
   ngOnInit(): void {
-    this.openLoadingDialog();
+    this.openLoadingDialog('Munkavállalói adatok betöltése...');
     this.getEmployees();
   }
 
@@ -29,9 +32,11 @@ export class EmployeesComponent implements OnInit {
     this.employeesService.getAll()
       .subscribe(
         data => {
+          let employeeData: Employees[] = [];
           this.employees = data;
-          this.dataSource = this.employees;
+          this.table.dataSource = this.employees;
           this.closeLoadingDialog();
+          this.table.renderRows();
         },
         error => {
           console.log(error);
@@ -48,29 +53,55 @@ export class EmployeesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      const data = {
-        Name: result.employee.name,
-        BirthName: result.employee.birthName,
-        PhoneNumber: result.employee.phoneNumber,
-        IdentityCardNumber: result.employee.indentityCardNumber,
-        GenderId: result.employee.genderId,
-        ValueStreamId: result.employee.valueStreamId,
-        NameOfMother: result.employee.nameOfMother,
-        postalCode: result.employee.postalCode,
-        City: result.employee.city,
-        Address: result.employee.address,
-        JobId: result.employee.jobId,
-        StatusId: result.employee.statusId
+      if(result.employee != null && result.allowanceTypesViewModel.length > 0) {
+        this.openLoadingDialog('Munkavállaló hozzáadása...');
+        const data = {
+          Name: result.employee.name,
+          BirthName: result.employee.birthName,
+          PhoneNumber: result.employee.phoneNumber,
+          IdentityCardNumber: result.employee.indentityCardNumber,
+          GenderId: result.employee.genderId,
+          NameOfMother: result.employee.nameOfMother,
+          PostalCode: result.employee.postalCode,
+          City: result.employee.city,
+          Address: result.employee.address,
+          JobId: result.employee.jobId,
+          StatusId: result.employee.statusId
+        }
+        this.employeesService.create(data)
+          .subscribe(
+            response => {
+              console.log(result.allowanceTypesViewModel);
+              result.allowanceTypesViewModel.forEach((allowance) => {
+                const allowanceData = {
+                  EmployeeId: response.employeeId,
+                  AllowanceTypeId: allowance.id,
+                  Value: allowance.value
+                }
+                this.allowancesOfEmployeesService.create(allowanceData)
+                  .subscribe(
+                    error => {
+                      console.log(error);
+                    }
+                  );
+              });
+              this.openLoadingDialog('Munkavállalói adatok betöltése...');
+              this.getEmployees();
+            },
+            error => {
+              console.log(error);
+            }
+          );
       }
-      console.log(data);
+
     })
   }
 
-  openLoadingDialog() {
+  openLoadingDialog(message: string) {
     this.dialog.open(LoadingDialogComponent, {
       disableClose: true,
       data: {
-        message: 'Munkavállalói adatok betöltése...'
+        message: message
       },
     });
   }

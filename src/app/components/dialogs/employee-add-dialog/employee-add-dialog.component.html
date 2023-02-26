@@ -199,36 +199,11 @@
           <div class="segment">
             <div>
               <mat-form-field class="field">
-                <mat-label>Terület*</mat-label>
-                <mat-select
-                  formControlName="valueStreamId"
-                  (selectionChange)="getJobsOfValueStream()"
-                >
-                  <mat-option [value]="null">Kérlek válassz...</mat-option>
-                  <mat-option
-                    *ngFor="let valueStream of valueStreams"
-                    [value]="valueStream.id"
-                  >
-                    {{ valueStream.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <div class="field" *ngIf="getControl.valueStreamId.touched">
-                <p
-                  *ngIf="getControl.valueStreamId.errors?.required"
-                  class="errorLabel"
-                >
-                  Mező kitöltése kötelező.
-                </p>
-              </div>
-            </div>
-            <div>
-              <mat-form-field class="field">
                 <mat-label>Beosztás*</mat-label>
                 <mat-select formControlName="jobId">
                   <mat-option [value]="null">Kérlek válassz...</mat-option>
                   <mat-option
-                    *ngFor="let job of jobsOfValueStreams"
+                    *ngFor="let job of jobs"
                     [value]="job.id"
                   >
                     {{ job.name }}
@@ -242,10 +217,23 @@
               </div>
             </div>
             <div>
-              <div class="field">
-                <mat-checkbox color="primary" formControlName="isLeader">A fent említett személy vezető</mat-checkbox>
+              <mat-form-field class="field">
+                <mat-label>Státusz*</mat-label>
+                <mat-select formControlName="statusId">
+                  <mat-option [value]="null">Kérlek válassz...</mat-option>
+                  <mat-option
+                    *ngFor="let status of statuses"
+                    [value]="status.id"
+                  >
+                    {{ status.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <div class="field" *ngIf="getControl.statusId.touched">
+                <p *ngIf="getControl.statusId.errors?.required" class="errorLabel">
+                  Mező kitöltése kötelező.
+                </p>
               </div>
-
             </div>
           </div>
           <div class="allowancesSegmentBorder">
@@ -285,8 +273,8 @@
             </div>
             <hr />
             <table
-              mat-table
               #table
+              mat-table
               [dataSource]="addedAllowanceTypes"
               *ngIf="this.addedAllowanceTypes.length > 0"
               class="mat-elevation-z8 allowanceTable"

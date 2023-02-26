@@ -5,8 +5,6 @@ export class Users {
     id: number;
     email: string;
     password: string;
-    employeeId: number;
     roleId: number;
     roles: Roles;
-    employees: Employees;
 }
