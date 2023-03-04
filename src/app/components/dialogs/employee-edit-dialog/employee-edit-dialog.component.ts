@@ -1,45 +1,26 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  Form,
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { element } from 'protractor';
 import { AddEmployeeInterface } from 'src/app/interfaces/add-employee-interface';
-import { AllowancesOfEmployees } from 'src/app/models/allowancesOfEmployeesModel/allowances-of-employees.model';
+import { EditEmployeeInterface } from 'src/app/interfaces/edit-employee-interface';
 import { AllowanceTypes } from 'src/app/models/allowanceTypesModel/allowance-types.model';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
 import { Genders } from 'src/app/models/gendersModel/genders.model';
 import { Jobs } from 'src/app/models/jobsModel/jobs.model';
 import { Statuses } from 'src/app/models/statusesModel/statuses.model';
 import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceTypesViewModel/allowance-types-view-model.model';
-import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { AllowanceTypesService } from 'src/app/services/allowanceTypesServices/allowance-types.service';
 import { GendersService } from 'src/app/services/gendersServices/genders.service';
 import { JobsService } from 'src/app/services/jobsServices/jobs.service';
 import { StatusesService } from 'src/app/services/statusesServices/statuses.service';
-import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 
 @Component({
-  selector: 'app-employee-add-dialog',
-  templateUrl: './employee-add-dialog.component.html',
-  styleUrls: ['./employee-add-dialog.component.scss'],
+  selector: 'app-employee-edit-dialog',
+  templateUrl: './employee-edit-dialog.component.html',
+  styleUrls: ['./employee-edit-dialog.component.scss'],
 })
-export class EmployeeAddDialogComponent implements OnInit {
+export class EmployeeEditDialogComponent implements OnInit {
   form: FormGroup;
   statuses: Statuses[];
   jobs: Jobs[];
@@ -76,8 +57,8 @@ export class EmployeeAddDialogComponent implements OnInit {
     private jobsService: JobsService,
     private gendersService: GendersService,
     private allowanceTypesService: AllowanceTypesService,
-    private addEmployeeDialogRef: MatDialogRef<EmployeeAddDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: AddEmployeeInterface
+    private addEmployeeDialogRef: MatDialogRef<EmployeeEditDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: EditEmployeeInterface
   ) {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -112,9 +93,11 @@ export class EmployeeAddDialogComponent implements OnInit {
     this.getJobs();
     this.getGenders();
     this.getAllowanceTypes();
+    this.fillEmployeeForm();
+    this.data.editFormSubmitted = false;
   }
 
-  addEmployee(): void {
+  updateEmployee(): void {
     this.submitted = true;
     if (this.addedAllowanceTypes.length == 0) {
       this.addedAllowancesIsNotNull = false;
@@ -122,6 +105,7 @@ export class EmployeeAddDialogComponent implements OnInit {
       this.addedAllowancesIsNotNull = true;
     }
     if (this.form.valid && this.addedAllowancesIsNotNull == true) {
+      this.data.editFormSubmitted = true;
       this.employee.name = this.form.controls.name.value;
       this.employee.birthName = this.form.controls.birthName.value;
       this.employee.phoneNumber = this.form.controls.phoneNumber.value;
@@ -143,6 +127,22 @@ export class EmployeeAddDialogComponent implements OnInit {
         control.markAsTouched({ onlySelf: true });
       });
     }
+  }
+
+  fillEmployeeForm(): void {
+    this.form.controls.name.patchValue(this.data.employee.name);
+    this.form.controls.birthName.patchValue(this.data.employee.birthName);
+    this.form.controls.phoneNumber.patchValue(this.data.employee.phoneNumber);
+    this.form.controls.identityCardNumber.patchValue(this.data.employee.identityCardNumber);
+    this.form.controls.genderId.patchValue(this.data.employee.genderId);
+    this.form.controls.nameOfMother.patchValue(this.data.employee.nameOfMother);
+    this.form.controls.postalCode.patchValue(this.data.employee.postalCode);
+    this.form.controls.city.patchValue(this.data.employee.city);
+    this.form.controls.address.patchValue(this.data.employee.address);
+    this.form.controls.jobId.patchValue(this.data.employee.jobId);
+    this.form.controls.statusId.patchValue(this.data.employee.statusId);
+    this.addedAllowanceTypes = this.data.allowanceTypesViewModel;
+    this.table.renderRows();
   }
 
   getStatuses(): void {

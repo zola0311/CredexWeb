@@ -52,6 +52,7 @@ import { MatTableModule } from '@angular/material/table';
 import { HomePageComponent } from './components/homePage/home-page/home-page.component';
 import { LoadingDialogComponent } from './components/dialogs/loading-dialog/loading-dialog.component';
 import { EmployeeAddDialogComponent } from './components/dialogs/employee-add-dialog/employee-add-dialog.component';
+import { EmployeeEditDialogComponent } from './components/dialogs/employee-edit-dialog/employee-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { EmployeeAddDialogComponent } from './components/dialogs/employee-add-di
     EmployeesComponent,
     HomePageComponent,
     LoadingDialogComponent,
-    EmployeeAddDialogComponent
+    EmployeeAddDialogComponent,
+    EmployeeEditDialogComponent
   ],
   imports: [
     BrowserModule,

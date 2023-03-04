@@ -2,11 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { nextTick } from 'process';
+import { AllowancesOfEmployees } from 'src/app/models/allowancesOfEmployeesModel/allowances-of-employees.model';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
 import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceTypesViewModel/allowance-types-view-model.model';
 import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
 import { EmployeeAddDialogComponent } from '../../dialogs/employee-add-dialog/employee-add-dialog.component';
+import { EmployeeEditDialogComponent } from '../../dialogs/employee-edit-dialog/employee-edit-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
 
 @Component({
@@ -20,6 +22,7 @@ export class EmployeesComponent implements OnInit {
   dataSource = null;
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
+  employeeEditDialogRef: MatDialogRef<EmployeeEditDialogComponent>;
   @ViewChild('table') table: MatTable<Employees>;
   constructor(private employeesService: EmployeesService, private dialog: MatDialog, private allowancesOfEmployeesService: AllowancesOfEmployeesService) { }
 
@@ -32,7 +35,6 @@ export class EmployeesComponent implements OnInit {
     this.employeesService.getAll()
       .subscribe(
         data => {
-          let employeeData: Employees[] = [];
           this.employees = data;
           this.table.dataSource = this.employees;
           this.closeLoadingDialog();
@@ -97,6 +99,16 @@ export class EmployeesComponent implements OnInit {
     })
   }
 
+  openEditEmployeeDialog(employee: Employees): void {
+    const allowancesOfEmployees = this.getAllowancesOfEmployee(employee.employeeId);
+    const dialogRef = this.dialog.open(EmployeeEditDialogComponent, {
+      disableClose: true,
+      width: '100%',
+      height: '80%',
+      data: {employee: employee, allowanceTypesViewModel: allowancesOfEmployees}
+    });
+  }
+
   openLoadingDialog(message: string) {
     this.dialog.open(LoadingDialogComponent, {
       disableClose: true,
@@ -108,6 +120,32 @@ export class EmployeesComponent implements OnInit {
 
   closeLoadingDialog() {
     this.dialog.closeAll();
+  }
+
+  getAllowancesOfEmployee(employeeId: number): AllowanceTypesViewModel[] {
+    let allowancesOfEmployee: AllowanceTypesViewModel[] = [];
+    this.allowancesOfEmployeesService.getAllowancesOfEmployee(employeeId)
+      .subscribe(
+        data => {
+          if(data.length > 0) {
+            data.forEach((element) => {
+              let currentAllowance: AllowanceTypesViewModel = {
+                id: null,
+                name: null,
+                value: null
+              };
+              currentAllowance.id = element.allowanceTypes.id;
+              currentAllowance.name = element.allowanceTypes.name;
+              currentAllowance.value = element.value;
+              allowancesOfEmployee.push(currentAllowance);
+            })
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      return allowancesOfEmployee;
   }
 
 }

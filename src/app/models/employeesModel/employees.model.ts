@@ -9,7 +9,7 @@ export class Employees {
     name: string;
     birthName: string;
     phoneNumber: string;
-    indentityCardNumber: string;
+    identityCardNumber: string;
     genderId: number;
     nameOfMother: string;
     postalCode: number;

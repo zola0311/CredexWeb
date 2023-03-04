@@ -1,5 +1,5 @@
 <div class="dialogSize">
-  <h1 mat-dialog-title>Új munkavállaló hozzáadása</h1>
+  <h1 mat-dialog-title>Munkavállaló szerkesztése</h1>
   <mat-dialog-content class="dialog">
     <div class="dialog-body">
       <form [formGroup]="form">
@@ -276,7 +276,7 @@
               #table
               mat-table
               [dataSource]="addedAllowanceTypes"
-              *ngIf="this.addedAllowanceTypes.length > 0"
+              *ngIf="this.addedAllowanceTypes.length != 0"
               class="mat-elevation-z8 allowanceTable"
             >
               <ng-container matColumnDef="name">
@@ -326,7 +326,7 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="addEmployee()">
+    <button mat-raised-button color="primary" (click)="updateEmployee()">
       <mat-icon>check</mat-icon>
     </button>
     <button mat-raised-button color="accent" mat-dialog-close>
@@ -334,3 +334,4 @@
     </button>
   </mat-dialog-actions>
 </div>
+

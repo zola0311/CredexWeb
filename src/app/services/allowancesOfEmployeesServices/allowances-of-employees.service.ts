@@ -17,8 +17,12 @@ export class AllowancesOfEmployeesService {
     return this.http.get<AllowancesOfEmployees[]>(baseUrl);
   }
 
-  get(id: any): Observable<AllowancesOfEmployees> {
+  get(id: number): Observable<AllowancesOfEmployees> {
     return this.http.get<AllowancesOfEmployees>(`${baseUrl}/${id}`);
+  }
+
+  getAllowancesOfEmployee(employeeId: number): Observable<AllowancesOfEmployees[]> {
+    return this.http.get<AllowancesOfEmployees[]>(`${baseUrl}/getAllowancesOfEmployee/${employeeId}`)
   }
 
   create(data: any): Observable<any> {
