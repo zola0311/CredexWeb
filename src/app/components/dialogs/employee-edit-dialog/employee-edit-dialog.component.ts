@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { AddEmployeeInterface } from 'src/app/interfaces/add-employee-interface';
 import { EditEmployeeInterface } from 'src/app/interfaces/edit-employee-interface';
@@ -14,6 +14,7 @@ import { AllowanceTypesService } from 'src/app/services/allowanceTypesServices/a
 import { GendersService } from 'src/app/services/gendersServices/genders.service';
 import { JobsService } from 'src/app/services/jobsServices/jobs.service';
 import { StatusesService } from 'src/app/services/statusesServices/statuses.service';
+import { LoadingDialogComponent } from '../loading-dialog/loading-dialog.component';
 
 @Component({
   selector: 'app-employee-edit-dialog',
@@ -50,6 +51,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     jobs: null,
   };
   displayedColumns: string[] = ['name', 'value', 'deleteColumn'];
+  loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   @ViewChild('table') table: MatTable<AllowanceTypesViewModel>;
   constructor(
     private formBuilder: FormBuilder,
@@ -58,6 +60,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     private gendersService: GendersService,
     private allowanceTypesService: AllowanceTypesService,
     private addEmployeeDialogRef: MatDialogRef<EmployeeEditDialogComponent>,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: EditEmployeeInterface
   ) {
     this.form = this.formBuilder.group({
@@ -106,6 +109,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     }
     if (this.form.valid && this.addedAllowancesIsNotNull == true) {
       this.data.editFormSubmitted = true;
+      this.employee.employeeId = this.data.employee.employeeId;
       this.employee.name = this.form.controls.name.value;
       this.employee.birthName = this.form.controls.birthName.value;
       this.employee.phoneNumber = this.form.controls.phoneNumber.value;
@@ -130,6 +134,7 @@ export class EmployeeEditDialogComponent implements OnInit {
   }
 
   fillEmployeeForm(): void {
+    this.openLoadingDialog('Munkavállalói adatok betöltése...');
     this.form.controls.name.patchValue(this.data.employee.name);
     this.form.controls.birthName.patchValue(this.data.employee.birthName);
     this.form.controls.phoneNumber.patchValue(this.data.employee.phoneNumber);
@@ -142,6 +147,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     this.form.controls.jobId.patchValue(this.data.employee.jobId);
     this.form.controls.statusId.patchValue(this.data.employee.statusId);
     this.addedAllowanceTypes = this.data.allowanceTypesViewModel;
+    this.closeLoadingDialog();
     this.table.renderRows();
   }
 
@@ -218,4 +224,21 @@ export class EmployeeEditDialogComponent implements OnInit {
   closeAddEmployeeDialog() {
     this.addEmployeeDialogRef.close(this.data);
   }
+
+  openLoadingDialog(message: string) {
+    this.loadingDialogRef = this.dialog.open(LoadingDialogComponent, {
+      disableClose: true,
+      data: {
+        message: message,
+      },
+    });
+  }
+
+  closeLoadingDialog() {
+    this.loadingDialogRef.close();
+  }
+
+  // closeLoadingDialog() {
+  //   this.dialog.closeAll();
+  // }
 }

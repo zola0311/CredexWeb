@@ -3,15 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GlobalVariables } from 'src/app/helpers/globalVariables/global-variables';
 import { Employees } from 'src/app/models/employeesModel/employees.model';
+import { AllowancesOfEmployees } from 'src/app/models/allowancesOfEmployeesModel/allowances-of-employees.model';
+import { EmployeeAndAllowancesOfEmployees } from 'src/app/models/employeeAndAllowancesOfEmployees/employee-and-allowances-of-employees.model';
 
-const baseUrl = GlobalVariables.apiURL + "Employees";
+const baseUrl = GlobalVariables.apiURL + 'Employees';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeesService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<Employees[]> {
     return this.http.get<Employees[]>(baseUrl);
@@ -25,8 +26,11 @@ export class EmployeesService {
     return this.http.post(baseUrl, data);
   }
 
-  update(id: any, data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/${id}`, data);
+  update(
+    id: any,
+    employeeAndAllowancesOfEmployees: EmployeeAndAllowancesOfEmployees
+  ): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, employeeAndAllowancesOfEmployees);
   }
 
   delete(id: any): Observable<any> {
