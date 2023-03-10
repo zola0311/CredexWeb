@@ -46,13 +46,14 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 // Material Data tables
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HomePageComponent } from './components/homePage/home-page/home-page.component';
 import { LoadingDialogComponent } from './components/dialogs/loading-dialog/loading-dialog.component';
 import { EmployeeAddDialogComponent } from './components/dialogs/employee-add-dialog/employee-add-dialog.component';
 import { EmployeeEditDialogComponent } from './components/dialogs/employee-edit-dialog/employee-edit-dialog.component';
+import { getHungarianPaginatorIntl } from './helpers/paginatorHungarianLanguage/paginator-hungarian-language';
 
 @NgModule({
   declarations: [
@@ -143,7 +144,9 @@ import { EmployeeEditDialogComponent } from './components/dialogs/employee-edit-
     MatSortModule,
     MatTableModule
   ],
-  providers: [],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getHungarianPaginatorIntl() }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -62,6 +62,7 @@ export class EmployeeAddDialogComponent implements OnInit {
     address: '',
     jobId: null,
     statusId: null,
+    isDeleted: false,
     statuses: null,
     allowanceOfEmployees: null,
     genders: null,

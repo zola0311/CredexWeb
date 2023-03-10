@@ -17,6 +17,7 @@ export class Employees {
     address: string;
     jobId: number;
     statusId: number;
+    isDeleted: boolean;
     statuses: Statuses;
     allowanceOfEmployees: AllowancesOfEmployees[];
     jobs: Jobs;

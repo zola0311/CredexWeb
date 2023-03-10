@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MatTable } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { nextTick } from 'process';
 import { AllowancesOfEmployees } from 'src/app/models/allowancesOfEmployeesModel/allowances-of-employees.model';
 import { EmployeeAndAllowancesOfEmployees } from 'src/app/models/employeeAndAllowancesOfEmployees/employee-and-allowances-of-employees.model';
@@ -18,7 +19,7 @@ import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dia
   styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
-  employees: Employees[];
+  employees: Employees[] = [];
   displayedColumns: string[] = [
     'employeeId',
     'name',
@@ -28,16 +29,18 @@ export class EmployeesComponent implements OnInit {
     'detailsColumn',
     'deleteColumn',
   ];
-  dataSource = null;
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
   employeeEditDialogRef: MatDialogRef<EmployeeEditDialogComponent>;
   @ViewChild('employeeTable') table: MatTable<Employees>;
+  @ViewChild('paginator') paginator: MatPaginator;
   constructor(
     private employeesService: EmployeesService,
     private dialog: MatDialog,
     private allowancesOfEmployeesService: AllowancesOfEmployeesService
   ) {}
+
+  dataSource = new MatTableDataSource(this.employees);
 
   ngOnInit(): void {
     this.openLoadingDialog('Munkavállalói adatok betöltése...');
@@ -48,7 +51,9 @@ export class EmployeesComponent implements OnInit {
     this.employeesService.getAll().subscribe(
       (data) => {
         this.employees = data;
-        this.table.dataSource = this.employees;
+        this.dataSource = new MatTableDataSource(this.employees);
+        this.dataSource.paginator = this.paginator;
+        console.log("getemployees" + this.employees);
         this.closeLoadingDialog();
         this.table.renderRows();
       },
