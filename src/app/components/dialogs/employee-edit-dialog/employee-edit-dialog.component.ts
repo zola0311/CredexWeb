@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
 import { AddEmployeeInterface } from 'src/app/interfaces/add-employee-interface';
 import { EditEmployeeInterface } from 'src/app/interfaces/edit-employee-interface';
@@ -139,7 +143,9 @@ export class EmployeeEditDialogComponent implements OnInit {
     this.form.controls.name.patchValue(this.data.employee.name);
     this.form.controls.birthName.patchValue(this.data.employee.birthName);
     this.form.controls.phoneNumber.patchValue(this.data.employee.phoneNumber);
-    this.form.controls.identityCardNumber.patchValue(this.data.employee.identityCardNumber);
+    this.form.controls.identityCardNumber.patchValue(
+      this.data.employee.identityCardNumber
+    );
     this.form.controls.genderId.patchValue(this.data.employee.genderId);
     this.form.controls.nameOfMother.patchValue(this.data.employee.nameOfMother);
     this.form.controls.postalCode.patchValue(this.data.employee.postalCode);
@@ -197,20 +203,25 @@ export class EmployeeEditDialogComponent implements OnInit {
   }
 
   addAllowance() {
-    let allowance: AllowanceTypesViewModel = {
-      id: null,
-      name: null,
-      value: null,
-    };
-    allowance.id = this.form.controls.allowanceTypeForAdd.value;
-    allowance.name = this.allowanceTypes
-      .filter((x) => x.id == this.form.controls.allowanceTypeForAdd.value)
-      .map((x) => x.name)
-      .toString();
-    allowance.value = this.form.controls.allowanceValueForAdd.value;
-    this.addedAllowanceTypes.push(allowance);
-    this.table.dataSource = this.addedAllowanceTypes;
-    this.table.renderRows();
+    if (
+      this.form.controls.allowanceTypeForAdd.value != null &&
+      this.form.controls.allowanceValueForAdd.value > 0
+    ) {
+      let allowance: AllowanceTypesViewModel = {
+        id: null,
+        name: null,
+        value: null,
+      };
+      allowance.id = this.form.controls.allowanceTypeForAdd.value;
+      allowance.name = this.allowanceTypes
+        .filter((x) => x.id == this.form.controls.allowanceTypeForAdd.value)
+        .map((x) => x.name)
+        .toString();
+      allowance.value = this.form.controls.allowanceValueForAdd.value;
+      this.addedAllowanceTypes.push(allowance);
+      this.table.dataSource = this.addedAllowanceTypes;
+      this.table.renderRows();
+    }
   }
 
   deleteAllowance(row: any) {
