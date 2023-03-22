@@ -4,7 +4,7 @@
     <button mat-raised-button color="primary" class="addNewEmployeeButton" (click)="openAddNewEmployeeDialog()">
         <mat-icon>person_add</mat-icon><span class="textIconPadding"></span>
     </button>
-    <button mat-raised-button color="warn" class="personOffButton" (click)="openAddNewEmployeeDialog()">
+    <button mat-raised-button color="warn" class="personOffButton" (click)="openDeletedEmployeesDialog()">
       <mat-icon>person_off</mat-icon><span class="textIconPadding"></span>
   </button>
     <table #employeeTable mat-table [dataSource]="dataSource" class="mat-elevation-z8 employees-table">

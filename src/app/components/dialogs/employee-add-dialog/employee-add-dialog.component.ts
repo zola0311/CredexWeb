@@ -191,20 +191,25 @@ export class EmployeeAddDialogComponent implements OnInit {
   }
 
   addAllowance() {
-    let allowance: AllowanceTypesViewModel = {
-      id: null,
-      name: null,
-      value: null,
-    };
-    allowance.id = this.form.controls.allowanceTypeForAdd.value;
-    allowance.name = this.allowanceTypes
-      .filter((x) => x.id == this.form.controls.allowanceTypeForAdd.value)
-      .map((x) => x.name)
-      .toString();
-    allowance.value = this.form.controls.allowanceValueForAdd.value;
-    this.addedAllowanceTypes.push(allowance);
-    this.table.dataSource = this.addedAllowanceTypes;
-    this.table.renderRows();
+    if (
+      this.form.controls.allowanceTypeForAdd.value != null &&
+      this.form.controls.allowanceValueForAdd.value > 0
+    ) {
+      let allowance: AllowanceTypesViewModel = {
+        id: null,
+        name: null,
+        value: null,
+      };
+      allowance.id = this.form.controls.allowanceTypeForAdd.value;
+      allowance.name = this.allowanceTypes
+        .filter((x) => x.id == this.form.controls.allowanceTypeForAdd.value)
+        .map((x) => x.name)
+        .toString();
+      allowance.value = this.form.controls.allowanceValueForAdd.value;
+      this.addedAllowanceTypes.push(allowance);
+      this.table.dataSource = this.addedAllowanceTypes;
+      this.table.renderRows();
+    }
   }
 
   deleteAllowance(row: any) {

@@ -54,6 +54,7 @@ import { LoadingDialogComponent } from './components/dialogs/loading-dialog/load
 import { EmployeeAddDialogComponent } from './components/dialogs/employee-add-dialog/employee-add-dialog.component';
 import { EmployeeEditDialogComponent } from './components/dialogs/employee-edit-dialog/employee-edit-dialog.component';
 import { getHungarianPaginatorIntl } from './helpers/paginatorHungarianLanguage/paginator-hungarian-language';
+import { EmployeeDeletedDialogComponent } from './components/dialogs/employee-deleted-dialog/employee-deleted-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { getHungarianPaginatorIntl } from './helpers/paginatorHungarianLanguage/
     HomePageComponent,
     LoadingDialogComponent,
     EmployeeAddDialogComponent,
-    EmployeeEditDialogComponent
+    EmployeeEditDialogComponent,
+    EmployeeDeletedDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -22,6 +22,18 @@ export class EmployeesService {
     return this.http.get<Employees>(`${baseUrl}/${id}`);
   }
 
+  getDeletedEmployees(): Observable<Employees[]> {
+    return this.http.get<Employees[]>(`${baseUrl}/getDeletedEmployees`);
+  }
+
+  restoreEmployee(employeeId: number, employee: Employees): Observable<any> {
+    return this.http.put<any>(`${baseUrl}/restoreEmployee/${employeeId}`, employee);
+  }
+
+  deleteEmployee(employeeId: number, employee: Employees): Observable<any> {
+    return this.http.put<any>(`${baseUrl}/deleteEmployee/${employeeId}`, employee);
+  }
+
   create(data: any): Observable<any> {
     return this.http.post(baseUrl, data);
   }

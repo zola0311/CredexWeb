@@ -10,6 +10,7 @@ import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceType
 import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
 import { EmployeeAddDialogComponent } from '../../dialogs/employee-add-dialog/employee-add-dialog.component';
+import { EmployeeDeletedDialogComponent } from '../../dialogs/employee-deleted-dialog/employee-deleted-dialog.component';
 import { EmployeeEditDialogComponent } from '../../dialogs/employee-edit-dialog/employee-edit-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
 
@@ -32,6 +33,7 @@ export class EmployeesComponent implements OnInit {
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
   employeeEditDialogRef: MatDialogRef<EmployeeEditDialogComponent>;
+  employeeDeletedDialogRef: MatDialogRef<EmployeeDeletedDialogComponent>;
   @ViewChild('employeeTable') table: MatTable<Employees>;
   @ViewChild('paginator') paginator: MatPaginator;
   constructor(
@@ -53,7 +55,6 @@ export class EmployeesComponent implements OnInit {
         this.employees = data;
         this.dataSource = new MatTableDataSource(this.employees);
         this.dataSource.paginator = this.paginator;
-        console.log("getemployees" + this.employees);
         this.closeLoadingDialog();
         this.table.renderRows();
       },
@@ -61,6 +62,19 @@ export class EmployeesComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  openDeletedEmployeesDialog(): void {
+    const dialogRef = this.dialog.open(EmployeeDeletedDialogComponent, {
+      disableClose: true,
+      width: '100%',
+      height: '80%',
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.openLoadingDialog('Munkavállalói adatok betöltése...');
+      this.getEmployees();
+    });
   }
 
   openAddNewEmployeeDialog(): void {
