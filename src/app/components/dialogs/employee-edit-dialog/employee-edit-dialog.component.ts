@@ -64,7 +64,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     private jobsService: JobsService,
     private gendersService: GendersService,
     private allowanceTypesService: AllowanceTypesService,
-    private addEmployeeDialogRef: MatDialogRef<EmployeeEditDialogComponent>,
+    private editEmployeeDialogRef: MatDialogRef<EmployeeEditDialogComponent>,
     private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: EditEmployeeInterface
   ) {
@@ -129,7 +129,7 @@ export class EmployeeEditDialogComponent implements OnInit {
       this.employee.statusId = this.form.controls.statusId.value;
       this.data.employee = this.employee;
       this.data.allowanceTypesViewModel = this.addedAllowanceTypes;
-      this.closeAddEmployeeDialog();
+      this.closeEditEmployeeDialog();
     } else {
       Object.keys(this.form.controls).forEach((field) => {
         const control = this.form.get(field);
@@ -233,8 +233,8 @@ export class EmployeeEditDialogComponent implements OnInit {
     this.table.renderRows();
   }
 
-  closeAddEmployeeDialog() {
-    this.addEmployeeDialogRef.close(this.data);
+  closeEditEmployeeDialog() {
+    this.editEmployeeDialogRef.close(this.data);
   }
 
   openLoadingDialog(message: string) {

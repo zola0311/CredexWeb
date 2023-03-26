@@ -10,6 +10,7 @@ import { AllowanceTypesViewModel } from 'src/app/models/viewModels/allowanceType
 import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
 import { EmployeeAddDialogComponent } from '../../dialogs/employee-add-dialog/employee-add-dialog.component';
+import { EmployeeDeleteDialogComponent } from '../../dialogs/employee-delete-dialog/employee-delete-dialog.component';
 import { EmployeeDeletedDialogComponent } from '../../dialogs/employee-deleted-dialog/employee-deleted-dialog.component';
 import { EmployeeEditDialogComponent } from '../../dialogs/employee-edit-dialog/employee-edit-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
@@ -181,6 +182,37 @@ export class EmployeesComponent implements OnInit {
           );
       }
     });
+  }
+
+  openDeleteEmployeeDialog(employee: Employees): void {
+    const dialogRef = this.dialog.open(EmployeeDeleteDialogComponent, {
+      disableClose: true,
+      data: {
+        employee: employee,
+        deleteRequired: false
+      },
+    });
+
+    dialogRef.afterClosed().subscribe(
+      result => {
+        if(result.deleteRequierd == true) {
+          this.openLoadingDialog('Munkavállaló törlése...');
+          console.log(result.employee.employeeId);
+          console.log(result.employee);
+          this.employeesService
+          .deleteEmployee(result.employee.employeeId, result.employee)
+          .subscribe(
+            (response) => {
+              this.openLoadingDialog('Munkavállói adatok betöltése...');
+              this.getEmployees();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
+      }
+    );
   }
 
   openLoadingDialog(message: string) {
