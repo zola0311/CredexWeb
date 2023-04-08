@@ -3,16 +3,16 @@
   <mat-dialog-content class="dialog">
     <div class="dialog-body">
       <div class="titleDiv">
-        <p class="titleLabel">Biztosan törölni szeretnéd az kiválasztott munkavállalót?</p>
+        <p class="titleLabel">Biztosan törölni szeretnéd a kiválasztott munkavállalót?</p>
       </div>
     </div>
   </mat-dialog-content>
   <hr />
   <mat-dialog-actions class="actions">
-    <button mat-raised-button color="primary" class="actionButtons" (click)="deleteEmployee()">
+    <button mat-raised-button color="primary" class="actionButtons" (click)="deleteEmployee()" matTooltip="Munkavállaló törlése">
       <mat-icon>check</mat-icon>
     </button>
-    <button mat-raised-button color="accent" class="actionButtons" mat-dialog-close>
+    <button mat-raised-button color="accent" class="actionButtons" mat-dialog-close matTooltip="Bezárás">
       <mat-icon>close</mat-icon>
     </button>
   </mat-dialog-actions>

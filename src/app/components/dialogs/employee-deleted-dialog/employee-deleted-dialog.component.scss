@@ -17,3 +17,13 @@
   font-weight: bold;
   color: red;
 }
+.loadingDivInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.loadingDivWrapper {
+  position: relative;
+  height: 60px;
+}

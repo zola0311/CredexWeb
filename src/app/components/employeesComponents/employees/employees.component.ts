@@ -184,35 +184,39 @@ export class EmployeesComponent implements OnInit {
     });
   }
 
-  openDeleteEmployeeDialog(employee: Employees): void {
+  openDeleteEmployeeDialog(employeeId: number): void {
     const dialogRef = this.dialog.open(EmployeeDeleteDialogComponent, {
       disableClose: true,
       data: {
-        employee: employee,
-        deleteRequired: false
+        deleteRequired: false,
       },
     });
 
-    dialogRef.afterClosed().subscribe(
-      result => {
-        if(result.deleteRequierd == true) {
-          this.openLoadingDialog('Munkavállaló törlése...');
-          console.log(result.employee.employeeId);
-          console.log(result.employee);
-          this.employeesService
-          .deleteEmployee(result.employee.employeeId, result.employee)
-          .subscribe(
-            (response) => {
-              this.openLoadingDialog('Munkavállói adatok betöltése...');
-              this.getEmployees();
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-        }
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result.deleteRequierd == true) {
+        this.openLoadingDialog('Munkavállaló törlése...');
+        this.employeesService.get(employeeId).subscribe(
+          (data) => {
+            data.isDeleted = true;
+            this.employeesService
+              .deleteEmployee(data.employeeId, data)
+              .subscribe(
+                () => {
+                  this.openLoadingDialog('Munkavállalói adatok betöltése...');
+                  this.getEmployees();
+                },
+                (error) => {
+                  console.log(error);
+                }
+              );
+          },
+          (error) => {
+            console.log(error);
+            return null;
+          }
+        );
       }
-    );
+    });
   }
 
   openLoadingDialog(message: string) {

@@ -12,6 +12,7 @@ import { EmployeesService } from 'src/app/services/employeesServices/employees.s
 })
 export class EmployeeDeletedDialogComponent implements OnInit {
   deletedEmployees: Employees[] = [];
+  pageLoaded: boolean = false;
   @ViewChild('deletedEmployeesTable') table: MatTable<Employees>;
   @ViewChild('paginator') paginator: MatPaginator;
   dataSource = new MatTableDataSource(this.deletedEmployees);
@@ -34,38 +35,24 @@ export class EmployeeDeletedDialogComponent implements OnInit {
 
   restoreEmployee(id: number): void {
     if (id != 0 || id != null) {
-      let employee: Employees = {
-        employeeId: null,
-        name: '',
-        birthName: '',
-        phoneNumber: '',
-        identityCardNumber: '',
-        genderId: null,
-        nameOfMother: '',
-        postalCode: null,
-        city: '',
-        address: '',
-        jobId: null,
-        statusId: null,
-        isDeleted: false,
-        statuses: null,
-        allowanceOfEmployees: null,
-        genders: null,
-        users: null,
-        jobs: null,
-      };
-      employee = this.deletedEmployees.filter((x) => x.employeeId == id)[0];
 
-      employee.isDeleted = false;
-
-      this.employeesServices
-        .restoreEmployee(employee.employeeId, employee)
+      this.employeesServices.get(id)
         .subscribe(
-          (response) => {
-            this.getDeletedEmployees();
-            this.table.renderRows();
+          data => {
+            data.isDeleted = false;
+            this.employeesServices
+            .restoreEmployee(data.employeeId, data)
+            .subscribe(
+              () => {
+                this.getDeletedEmployees();
+                this.table.renderRows();
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
           },
-          (error) => {
+          error => {
             console.log(error);
           }
         );
@@ -76,6 +63,7 @@ export class EmployeeDeletedDialogComponent implements OnInit {
     this.employeesServices.getDeletedEmployees().subscribe(
       (data) => {
         this.deletedEmployees = data;
+        this.pageLoaded = true;
         this.dataSource = new MatTableDataSource(this.deletedEmployees);
         this.dataSource.paginator = this.paginator;
         this.table.renderRows();

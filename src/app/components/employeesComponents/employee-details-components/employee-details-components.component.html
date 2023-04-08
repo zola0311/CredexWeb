@@ -1,0 +1,44 @@
+<div *ngIf="pageLoaded">
+  <h1>Munkavállaló részletek</h1>
+  <hr>
+  <div class="details">
+    <div class="element">
+      <p>Név: <br> {{employee.name}}</p>
+    </div>
+    <div class="element">
+      <p>Születési név: <br> {{employee.birthName}}</p>
+    </div>
+    <div class="element">
+      <p>Telefonszám: <br> {{employee.phoneNumber}}</p>
+    </div>
+    <div class="element">
+      <p>Személyi igazolvány szám: <br> {{employee.identityCardNumber}}</p>
+    </div>
+    <div class="element">
+      <p>Neme: <br> {{employee.genders.name}}</p>
+    </div>
+    <div class="element">
+      <p>Anyja neve: <br> {{employee.nameOfMother}}</p>
+    </div>
+    <div class="element">
+      <p>Irányítószám: <br> {{employee.postalCode}}</p>
+    </div>
+    <div class="element">
+      <p>Város: <br> {{employee.city}}</p>
+    </div>
+    <div class="element">
+      <p>Cím: <br> {{employee.address}}</p>
+    </div>
+    <div class="element">
+      <p>Beosztás: <br> {{employee.jobs.name}}</p>
+    </div>
+    <div class="element">
+      <p>Státusz: <br> {{employee.statuses.name}}</p>
+    </div>
+    <div class="element">
+      <p *ngIf="employee.isDeleted">Törölt munkavállaló: <br> Igen</p>
+      <p *ngIf="!employee.isDeleted">Törölt munkavállaló: <br> Nem</p>
+    </div>
+  </div>
+</div>
+

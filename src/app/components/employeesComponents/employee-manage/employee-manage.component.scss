@@ -1,0 +1,43 @@
+.sidenav {
+  display: inline-table;
+  width: 300px;
+  height: calc(90vh - 70px);
+  border-radius: 0.5em;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 0;
+  background-color: #b39ddb;
+}
+.sidenavElement {
+  display: block;
+  margin: 10px;
+  height: 40px;
+  background-color: #673ab7;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  border-radius: 0.5em;
+  width: 90%;
+}
+
+.sidenavElement:hover {
+  color: #673ab7;
+  background-color: white;
+}
+
+.router {
+  display: inline-table;
+  margin-left: 10px;
+  height: calc(90vh - 70px);
+  width: calc(100% - 350px);
+}
+
+.page {
+  margin-top: 10px;
+}
+
+.title {
+  margin-top: 5px;
+}

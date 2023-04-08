@@ -4,14 +4,16 @@
   <button
     mat-raised-button
     color="primary"
+    matTooltip="Új munkavállaló hozzáadása"
     class="addNewEmployeeButton"
     (click)="openAddNewEmployeeDialog()"
   >
-    <mat-icon>person_add</mat-icon><span class="textIconPadding"></span>
+    <mat-icon >person_add</mat-icon><span class="textIconPadding"></span>
   </button>
   <button
     mat-raised-button
     color="warn"
+    matTooltip="Törölt munkavállalók"
     class="personOffButton"
     (click)="openDeletedEmployeesDialog()"
   >
@@ -49,6 +51,7 @@
         <button
           mat-raised-button
           color="accent"
+          matTooltip="Munkavállalói adatok szerkesztése"
           (click)="openEditEmployeeDialog(element)"
         >
           <mat-icon>edit</mat-icon>
@@ -59,7 +62,7 @@
     <ng-container matColumnDef="detailsColumn" class="tableButtonColumn">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="tableButtonColumn">
-        <button mat-raised-button color="accent">
+        <button mat-raised-button color="accent" matTooltip="Munkavállaló kezelése" routerLink="/employees/manage/{{element.employeeId}}">
           <mat-icon> list_alt</mat-icon>
         </button>
       </td>
@@ -68,7 +71,7 @@
     <ng-container matColumnDef="deleteColumn" class="tableButtonColumn">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="tableButtonColumn">
-        <button mat-raised-button color="warn" (click)="openDeleteEmployeeDialog(element)">
+        <button mat-raised-button color="warn" matTooltip="Munkavállaló törlése" (click)="openDeleteEmployeeDialog(element.employeeId)">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

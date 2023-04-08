@@ -266,6 +266,7 @@
                 mat-mini-fab
                 color="accent"
                 class="allowanceButton"
+                matTooltip="Juttatás hozzáadása"
                 (click)="addAllowance()"
               >
                 <mat-icon>add_circle</mat-icon>
@@ -304,6 +305,7 @@
                   <button
                     mat-raised-button
                     color="warn"
+                    matTooltip="Juttatás törlése"
                     (click)="deleteAllowance(element)"
                   >
                     <mat-icon>delete</mat-icon>
@@ -326,10 +328,10 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button mat-raised-button color="primary" (click)="addEmployee()">
+    <button mat-raised-button color="primary" (click)="addEmployee()" matTooltip="Munkavállaló hozzáadása">
       <mat-icon>check</mat-icon>
     </button>
-    <button mat-raised-button color="accent" mat-dialog-close>
+    <button mat-raised-button color="accent" mat-dialog-close matTooltip="Bezárás">
       <mat-icon>close</mat-icon>
     </button>
   </mat-dialog-actions>

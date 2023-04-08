@@ -25,13 +25,10 @@ export class EmployeeDeleteDialogComponent implements OnInit {
     private deleteEmployeeDialogRef: MatDialogRef<EmployeeDeleteDialogComponent>
   ) {}
 
-  dataSource = this.data.employee;
-
   ngOnInit(): void {}
 
   deleteEmployee(): void {
     this.data.deleteRequierd = true;
-    this.data.employee.isDeleted = true;
     this.deleteEmployeeDialogRef.close(this.data);
   }
 }

@@ -1,0 +1,15 @@
+<div *ngIf="pageLoaded">
+  <h1 class="title">{{employee.name}} - {{employee.jobs.name}}</h1>
+  <div class="page">
+    <div class="sidenav">
+      <button class="sidenavElement" (click)="setActivatedPage(0)">Részletek</button>
+      <button class="sidenavElement" (click)="setActivatedPage(1)">Távolmaradás</button>
+    </div>
+    <div class="router">
+      <app-employee-details-components *ngIf="activatedPageId == 0" [employeeId]="employeeId"></app-employee-details-components>
+      <app-employee-absence-components *ngIf="activatedPageId == 1"></app-employee-absence-components>
+    </div>
+  </div>
+</div>
+
+

@@ -35,6 +35,7 @@ export class EmployeeEditDialogComponent implements OnInit {
   addedAllowanceTypes: AllowanceTypesViewModel[] = [];
   addedAllowancesIsNotNull: boolean = false;
   submitted: boolean = false;
+  pageLoaded: boolean = false;
   employee: Employees = {
     employeeId: null,
     name: '',
@@ -65,7 +66,6 @@ export class EmployeeEditDialogComponent implements OnInit {
     private gendersService: GendersService,
     private allowanceTypesService: AllowanceTypesService,
     private editEmployeeDialogRef: MatDialogRef<EmployeeEditDialogComponent>,
-    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: EditEmployeeInterface
   ) {
     this.form = this.formBuilder.group({
@@ -139,7 +139,6 @@ export class EmployeeEditDialogComponent implements OnInit {
   }
 
   fillEmployeeForm(): void {
-    this.openLoadingDialog('Munkavállalói adatok betöltése...');
     this.form.controls.name.patchValue(this.data.employee.name);
     this.form.controls.birthName.patchValue(this.data.employee.birthName);
     this.form.controls.phoneNumber.patchValue(this.data.employee.phoneNumber);
@@ -154,7 +153,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     this.form.controls.jobId.patchValue(this.data.employee.jobId);
     this.form.controls.statusId.patchValue(this.data.employee.statusId);
     this.addedAllowanceTypes = this.data.allowanceTypesViewModel;
-    this.closeLoadingDialog();
+    this.pageLoaded = true;
     this.table.renderRows();
   }
 
@@ -236,21 +235,4 @@ export class EmployeeEditDialogComponent implements OnInit {
   closeEditEmployeeDialog() {
     this.editEmployeeDialogRef.close(this.data);
   }
-
-  openLoadingDialog(message: string) {
-    this.loadingDialogRef = this.dialog.open(LoadingDialogComponent, {
-      disableClose: true,
-      data: {
-        message: message,
-      },
-    });
-  }
-
-  closeLoadingDialog() {
-    this.loadingDialogRef.close();
-  }
-
-  // closeLoadingDialog() {
-  //   this.dialog.closeAll();
-  // }
 }

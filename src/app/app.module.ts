@@ -56,6 +56,9 @@ import { EmployeeEditDialogComponent } from './components/dialogs/employee-edit-
 import { getHungarianPaginatorIntl } from './helpers/paginatorHungarianLanguage/paginator-hungarian-language';
 import { EmployeeDeletedDialogComponent } from './components/dialogs/employee-deleted-dialog/employee-deleted-dialog.component';
 import { EmployeeDeleteDialogComponent } from './components/dialogs/employee-delete-dialog/employee-delete-dialog.component';
+import { EmployeeManageComponent } from './components/employeesComponents/employee-manage/employee-manage.component';
+import { EmployeeDetailsComponentsComponent } from './components/employeesComponents/employee-details-components/employee-details-components.component';
+import { EmployeeAbsenceComponentsComponent } from './components/employeesComponents/employee-absence-components/employee-absence-components.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +69,10 @@ import { EmployeeDeleteDialogComponent } from './components/dialogs/employee-del
     EmployeeAddDialogComponent,
     EmployeeEditDialogComponent,
     EmployeeDeletedDialogComponent,
-    EmployeeDeleteDialogComponent
+    EmployeeDeleteDialogComponent,
+    EmployeeManageComponent,
+    EmployeeDetailsComponentsComponent,
+    EmployeeAbsenceComponentsComponent
   ],
   imports: [
     BrowserModule,

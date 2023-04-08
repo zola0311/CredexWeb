@@ -2,7 +2,12 @@
   <h1 mat-dialog-title>Törölt munkavállalók</h1>
   <mat-dialog-content class="dialog">
     <div class="dialog-body">
-      <div *ngIf="this.deletedEmployees.length > 0">
+      <div *ngIf="!pageLoaded" class="loadingDivWrapper">
+        <div class="loadingDivInner">
+          <mat-spinner [diameter]="30" color="primary"></mat-spinner>
+        </div>
+      </div>
+      <div *ngIf="this.deletedEmployees.length > 0 && pageLoaded">
         <table
           #deletedEmployeesTable
           mat-table
@@ -37,6 +42,7 @@
               <button
                 mat-raised-button
                 color="accent"
+                matTooltip="Munkavállaló visszaállítása"
                 (click)="restoreEmployee(element.employeeId)"
               >
                 <mat-icon>refresh</mat-icon>
@@ -54,14 +60,14 @@
         >
         </mat-paginator>
       </div>
-      <div class="emptyDeletedEmployeesListDiv" *ngIf="this.deletedEmployees.length == 0">
+      <div class="emptyDeletedEmployeesListDiv" *ngIf="this.deletedEmployees.length == 0 && pageLoaded">
         <mat-label class="emptyDeletedEmployeesList">Nincs törölt munkavállaló.</mat-label>
       </div>
     </div>
   </mat-dialog-content>
   <hr />
   <mat-dialog-actions>
-    <button mat-raised-button color="primary" mat-dialog-close>
+    <button mat-raised-button color="primary" mat-dialog-close matTooltip="Bezárás">
       <mat-icon>check</mat-icon>
     </button>
   </mat-dialog-actions>
