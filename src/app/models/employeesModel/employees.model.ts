@@ -1,3 +1,4 @@
+import { AbsencesOfEmployees } from "../absencesOfEmployeesModel/absences-of-employees.model";
 import { AllowancesOfEmployees } from "../allowancesOfEmployeesModel/allowances-of-employees.model";
 import { Genders } from "../gendersModel/genders.model";
 import { Jobs } from "../jobsModel/jobs.model";
@@ -23,4 +24,5 @@ export class Employees {
     jobs: Jobs;
     genders: Genders;
     users: Users;
+    absencesOfEmployees: AbsencesOfEmployees[];
 }

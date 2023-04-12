@@ -55,6 +55,7 @@ export class EmployeeEditDialogComponent implements OnInit {
     genders: null,
     users: null,
     jobs: null,
+    absencesOfEmployees: null
   };
   displayedColumns: string[] = ['name', 'value', 'deleteColumn'];
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;

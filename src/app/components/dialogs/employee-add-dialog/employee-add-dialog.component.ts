@@ -68,6 +68,7 @@ export class EmployeeAddDialogComponent implements OnInit {
     genders: null,
     users: null,
     jobs: null,
+    absencesOfEmployees: null
   };
   displayedColumns: string[] = ['name', 'value', 'deleteColumn'];
   @ViewChild('table') table: MatTable<AllowanceTypesViewModel>;

@@ -7,7 +7,7 @@
     </div>
     <div class="router">
       <app-employee-details-components *ngIf="activatedPageId == 0" [employeeId]="employeeId"></app-employee-details-components>
-      <app-employee-absence-components *ngIf="activatedPageId == 1"></app-employee-absence-components>
+      <app-employee-absence-components *ngIf="activatedPageId == 1" [employeeId]="employeeId"></app-employee-absence-components>
     </div>
   </div>
 </div>

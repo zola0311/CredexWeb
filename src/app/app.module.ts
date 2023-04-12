@@ -39,7 +39,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -59,6 +59,7 @@ import { EmployeeDeleteDialogComponent } from './components/dialogs/employee-del
 import { EmployeeManageComponent } from './components/employeesComponents/employee-manage/employee-manage.component';
 import { EmployeeDetailsComponentsComponent } from './components/employeesComponents/employee-details-components/employee-details-components.component';
 import { EmployeeAbsenceComponentsComponent } from './components/employeesComponents/employee-absence-components/employee-absence-components.component';
+import { AbsenceAddDialogComponent } from './components/dialogs/absence-add-dialog/absence-add-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { EmployeeAbsenceComponentsComponent } from './components/employeesCompon
     EmployeeDeleteDialogComponent,
     EmployeeManageComponent,
     EmployeeDetailsComponentsComponent,
-    EmployeeAbsenceComponentsComponent
+    EmployeeAbsenceComponentsComponent,
+    AbsenceAddDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +117,9 @@ import { EmployeeAbsenceComponentsComponent } from './components/employeesCompon
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -152,7 +156,9 @@ import { EmployeeAbsenceComponentsComponent } from './components/employeesCompon
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getHungarianPaginatorIntl() }
