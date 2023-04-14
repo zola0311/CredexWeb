@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmployeesComponent } from './components/employeesComponents/employees/employees.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Material Form Controls
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -161,7 +162,8 @@ import { AbsenceAddDialogComponent } from './components/dialogs/absence-add-dial
     MatNativeDateModule
   ],
   providers: [
-    { provide: MatPaginatorIntl, useValue: getHungarianPaginatorIntl() }
+    { provide: MatPaginatorIntl, useValue: getHungarianPaginatorIntl() },
+    { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' }
   ],
   bootstrap: [AppComponent]
 })

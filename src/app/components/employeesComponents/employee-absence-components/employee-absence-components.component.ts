@@ -6,6 +6,7 @@ import { AbsencesOfEmployees } from 'src/app/models/absencesOfEmployeesModel/abs
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AbsenceAddDialogComponent } from '../../dialogs/absence-add-dialog/absence-add-dialog.component';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-employee-absence-components',
@@ -55,11 +56,31 @@ export class EmployeeAbsenceComponentsComponent implements OnInit {
   openAddAbsenceDialog(): void {
     const dialogRef = this.dialog.open(AbsenceAddDialogComponent, {
       disableClose: true,
-      width: '100%',
-      height: '80%',
+      width: '50%',
+      height: '30%',
+      data: {
+        date: Date,
+        absenceTypeId: Number
+      }
     });
 
-    dialogRef.afterClosed().subscribe(() => {
+    dialogRef.afterClosed().subscribe((result) => {
+      const data = {
+        Date: formatDate(result.date, 'yyyy-MM-dd', 'en-EN'),
+        AbsenceTypeId: result.absenceTypeId,
+        EmployeeId: this.employeeId
+      }
+      console.log(data);
+      this.absencesOfEmployeesService.create(data)
+        .subscribe(
+          response => {
+
+          },
+          error => {
+            console.log(error);
+          }
+        );
+
     });
   }
 
