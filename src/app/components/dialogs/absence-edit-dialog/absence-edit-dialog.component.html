@@ -1,7 +1,7 @@
 <div class="dialogSize">
   <h1 mat-dialog-title></h1>
   <mat-dialog-content class="dialog">
-    <h1>Távolmaradás hozzáadása</h1>
+    <h1>Távolmaradás szerkesztése</h1>
     <hr>
     <div class="dialog-body">
       <form [formGroup]="form">
@@ -56,8 +56,8 @@
     <button
       mat-raised-button
       color="primary"
-      matTooltip="Távolmaradás hozzáadása"
-      (click)="addAbsenceToEmployee()"
+      matTooltip="Távolmaradás mentése"
+      (click)="updateAbsenceOfEmployee()"
     >
       <mat-icon>check</mat-icon>
     </button>
@@ -71,3 +71,4 @@
     </button>
   </mat-dialog-actions>
 </div>
+

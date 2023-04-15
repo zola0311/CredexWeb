@@ -1,0 +1,14 @@
+.segment {
+  display: flex;
+}
+.field {
+  margin-left: 20px;
+}
+.errorLabel {
+  color: red;
+}
+.dialog-body {
+  margin-top: 10px;
+  display: grid;
+  justify-content: center;
+}

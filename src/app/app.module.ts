@@ -61,6 +61,12 @@ import { EmployeeManageComponent } from './components/employeesComponents/employ
 import { EmployeeDetailsComponentsComponent } from './components/employeesComponents/employee-details-components/employee-details-components.component';
 import { EmployeeAbsenceComponentsComponent } from './components/employeesComponents/employee-absence-components/employee-absence-components.component';
 import { AbsenceAddDialogComponent } from './components/dialogs/absence-add-dialog/absence-add-dialog.component';
+import { AbsenceEditDialogComponent } from './components/dialogs/absence-edit-dialog/absence-edit-dialog.component';
+import { AbsenceDeleteDialogComponent } from './components/dialogs/absence-delete-dialog/absence-delete-dialog.component';
+import { AbsenceTypesComponent } from './components/absenceTypesComponents/absence-types/absence-types.component';
+import { AbsenceTypeAddDialogComponent } from './components/dialogs/absence-type-add-dialog/absence-type-add-dialog.component';
+import { AbsenceTypeEditDialogComponent } from './components/dialogs/absence-type-edit-dialog/absence-type-edit-dialog.component';
+import { AbsenceTypeDeleteDialogComponent } from './components/dialogs/absence-type-delete-dialog/absence-type-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +81,13 @@ import { AbsenceAddDialogComponent } from './components/dialogs/absence-add-dial
     EmployeeManageComponent,
     EmployeeDetailsComponentsComponent,
     EmployeeAbsenceComponentsComponent,
-    AbsenceAddDialogComponent
+    AbsenceAddDialogComponent,
+    AbsenceEditDialogComponent,
+    AbsenceDeleteDialogComponent,
+    AbsenceTypesComponent,
+    AbsenceTypeAddDialogComponent,
+    AbsenceTypeEditDialogComponent,
+    AbsenceTypeDeleteDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -11,17 +11,8 @@ import { EmployeesService } from 'src/app/services/employeesServices/employees.s
   styleUrls: ['./employee-delete-dialog.component.scss'],
 })
 export class EmployeeDeleteDialogComponent implements OnInit {
-  employee: Employees;
-  displayedColumns: string[] = [
-    'employeeId',
-    'name',
-    'job',
-    'status'
-  ];
-  @ViewChild('employeeTable') table: MatTable<Employees>;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DeleteEmployeeInterface,
-    private employeesService: EmployeesService,
     private deleteEmployeeDialogRef: MatDialogRef<EmployeeDeleteDialogComponent>
   ) {}
 

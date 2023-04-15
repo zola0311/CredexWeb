@@ -7,11 +7,14 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { AbsenceAddDialogComponent } from '../../dialogs/absence-add-dialog/absence-add-dialog.component';
 import { formatDate } from '@angular/common';
+import { AbsenceEditDialogComponent } from '../../dialogs/absence-edit-dialog/absence-edit-dialog.component';
+import { AbsencesOfEmployeesViewModel } from 'src/app/models/viewModels/absencesOfEmployeesViewModel/absences-of-employees-view-model.model';
+import { AbsenceDeleteDialogComponent } from '../../dialogs/absence-delete-dialog/absence-delete-dialog.component';
 
 @Component({
   selector: 'app-employee-absence-components',
   templateUrl: './employee-absence-components.component.html',
-  styleUrls: ['./employee-absence-components.component.scss']
+  styleUrls: ['./employee-absence-components.component.scss'],
 })
 export class EmployeeAbsenceComponentsComponent implements OnInit {
   absencesOfEmployee: AbsencesOfEmployees[] = [];
@@ -25,32 +28,34 @@ export class EmployeeAbsenceComponentsComponent implements OnInit {
   pageLoaded: boolean = false;
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   absenceAddDialogRef: MatDialogRef<AbsenceAddDialogComponent>;
-  @ViewChild('employeeTable') table: MatTable<AbsencesOfEmployees>;
+  @ViewChild('absenceTable') table: MatTable<AbsencesOfEmployees>;
   @ViewChild('paginator') paginator: MatPaginator;
-  constructor(private dialog: MatDialog, private absencesOfEmployeesService: AbsencesOfEmployeesService) { }
+  constructor(
+    private dialog: MatDialog,
+    private absencesOfEmployeesService: AbsencesOfEmployeesService
+  ) {}
 
   dataSource = new MatTableDataSource(this.absencesOfEmployee);
 
   ngOnInit(): void {
-    this.openLoadingDialog('Munkavállalói adatok betöltése...');
+    this.openLoadingDialog('Távolmaradások betöltése...');
     this.getEmployeeAbsences(this.employeeId);
   }
 
   getEmployeeAbsences(employeeId: number): void {
-    this.absencesOfEmployeesService.getEmployeeAbsences(employeeId)
-      .subscribe(
-        data => {
-          this.absencesOfEmployee = data;
-          this.dataSource = new MatTableDataSource(this.absencesOfEmployee);
-          this.dataSource.paginator = this.paginator;
-          this.closeLoadingDialog();
-          this.pageLoaded = true;
-          this.table.renderRows();
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    this.absencesOfEmployeesService.getEmployeeAbsences(employeeId).subscribe(
+      (data) => {
+        this.absencesOfEmployee = data;
+        this.dataSource = new MatTableDataSource(this.absencesOfEmployee);
+        this.dataSource.paginator = this.paginator;
+        this.closeLoadingDialog();
+        this.pageLoaded = true;
+        this.table.renderRows();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   openAddAbsenceDialog(): void {
@@ -60,28 +65,96 @@ export class EmployeeAbsenceComponentsComponent implements OnInit {
       height: '30%',
       data: {
         date: Date,
-        absenceTypeId: Number
-      }
+        absenceTypeId: Number,
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      const data = {
-        Date: formatDate(result.date, 'yyyy-MM-dd', 'en-EN'),
-        AbsenceTypeId: result.absenceTypeId,
-        EmployeeId: this.employeeId
-      }
-      console.log(data);
-      this.absencesOfEmployeesService.create(data)
-        .subscribe(
-          response => {
-
+      if (result.date != null || result.absenceTypeId != null) {
+        const data = {
+          Date: formatDate(result.date, 'yyyy-MM-dd', 'en-EN'),
+          AbsenceTypeId: result.absenceTypeId,
+          EmployeeId: this.employeeId,
+        };
+        this.openLoadingDialog('Távolmaradás hozzáadása...');
+        this.absencesOfEmployeesService.create(data).subscribe(
+          () => {
+            this.openLoadingDialog('Távolmaradások betöltése...');
+            this.getEmployeeAbsences(this.employeeId);
+            this.closeLoadingDialog();
+            this.table.renderRows();
           },
-          error => {
+          (error) => {
             console.log(error);
           }
         );
-
+      }
     });
+  }
+
+  openEditAbsenceDialog(absenceOfEmployee: AbsencesOfEmployees): void {
+    const dialogRef = this.dialog.open(AbsenceEditDialogComponent, {
+      disableClose: true,
+      width: '50%',
+      height: '30%',
+      data: {
+        date: absenceOfEmployee.date,
+        absenceTypeId: absenceOfEmployee.absenceTypeId,
+        editFormSubmitted: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.editFormSubmitted) {
+        this.openLoadingDialog('Távolmaradás mentése...');
+        var newAbsence: AbsencesOfEmployeesViewModel = {
+          id: absenceOfEmployee.id,
+          employeeId: absenceOfEmployee.employeeId,
+          date: formatDate(result.date, 'yyyy-MM-dd', 'en-EN'),
+          absenceTypeId: result.absenceTypeId
+        }
+        this.absencesOfEmployeesService.update(newAbsence.id, newAbsence)
+          .subscribe(
+            () => {
+              this.openLoadingDialog('Távolmaradások betöltése...');
+              this.getEmployeeAbsences(this.employeeId);
+              this.closeLoadingDialog();
+              this.table.renderRows();
+            },
+            error => {
+              console.log(error);
+            }
+          );
+
+      }
+    });
+  }
+
+  openDeleteAbsenceDialog(absenceOfEmployee: AbsencesOfEmployees): void {
+    const dialogRef = this.dialog.open(AbsenceDeleteDialogComponent, {
+      disableClose: true,
+      data: {
+        deleteRequired: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result => {
+      if(result.deleteRequired) {
+        this.openLoadingDialog('Távolmaradás törlése...');
+        this.absencesOfEmployeesService.delete(absenceOfEmployee.id)
+          .subscribe(
+            () => {
+              this.openLoadingDialog('Távolmaradások betöltése...');
+              this.getEmployeeAbsences(this.employeeId);
+              this.closeLoadingDialog();
+              this.table.renderRows();
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      }
+    }));
   }
 
   openLoadingDialog(message: string) {
@@ -96,5 +169,4 @@ export class EmployeeAbsenceComponentsComponent implements OnInit {
   closeLoadingDialog() {
     this.dialog.closeAll();
   }
-
 }

@@ -17,7 +17,7 @@
   </div>
 
   <table
-    #employeeTable
+    #absenceTable
     mat-table
     [dataSource]="dataSource"
     *ngIf="this.absencesOfEmployee.length > 0"
@@ -42,6 +42,7 @@
           mat-raised-button
           color="accent"
           matTooltip="Távolmaradás szerkesztése"
+          (click)="openEditAbsenceDialog(element)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -55,6 +56,7 @@
           mat-raised-button
           color="warn"
           matTooltip="Távolmaradás törlése"
+          (click)="openDeleteAbsenceDialog(element)"
         >
           <mat-icon>delete</mat-icon>
         </button>
