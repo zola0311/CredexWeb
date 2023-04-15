@@ -67,6 +67,10 @@ import { AbsenceTypesComponent } from './components/absenceTypesComponents/absen
 import { AbsenceTypeAddDialogComponent } from './components/dialogs/absence-type-add-dialog/absence-type-add-dialog.component';
 import { AbsenceTypeEditDialogComponent } from './components/dialogs/absence-type-edit-dialog/absence-type-edit-dialog.component';
 import { AbsenceTypeDeleteDialogComponent } from './components/dialogs/absence-type-delete-dialog/absence-type-delete-dialog.component';
+import { StatusesComponent } from './components/statusesComponents/statuses/statuses.component';
+import { StatusesAddDialogComponent } from './components/dialogs/statuses-add-dialog/statuses-add-dialog.component';
+import { StatusesEditDialogComponent } from './components/dialogs/statuses-edit-dialog/statuses-edit-dialog.component';
+import { StatusesDeleteDialogComponent } from './components/dialogs/statuses-delete-dialog/statuses-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +91,11 @@ import { AbsenceTypeDeleteDialogComponent } from './components/dialogs/absence-t
     AbsenceTypesComponent,
     AbsenceTypeAddDialogComponent,
     AbsenceTypeEditDialogComponent,
-    AbsenceTypeDeleteDialogComponent
+    AbsenceTypeDeleteDialogComponent,
+    StatusesComponent,
+    StatusesAddDialogComponent,
+    StatusesEditDialogComponent,
+    StatusesDeleteDialogComponent
   ],
   imports: [
     BrowserModule,

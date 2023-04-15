@@ -20,7 +20,6 @@ export class AbsenceTypeAddDialogComponent implements OnInit {
   };
   constructor(
     private formBuilder: FormBuilder,
-    private absenceTypesService: AbsenceTypesService,
     private addAbsenceTypeDialogRef: MatDialogRef<AbsenceTypeAddDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: AddAbsenceTypesInterface
   ) {
