@@ -6,6 +6,8 @@ import { Statuses } from 'src/app/models/statusesModel/statuses.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { StatusesService } from 'src/app/services/statusesServices/statuses.service';
 import { StatusesAddDialogComponent } from '../../dialogs/statuses-add-dialog/statuses-add-dialog.component';
+import { StatusesEditDialogComponent } from '../../dialogs/statuses-edit-dialog/statuses-edit-dialog.component';
+import { StatusesDeleteDialogComponent } from '../../dialogs/statuses-delete-dialog/statuses-delete-dialog.component';
 
 @Component({
   selector: 'app-statuses',
@@ -62,6 +64,61 @@ export class StatusesComponent implements OnInit {
       if(result.status != null) {
         this.openLoadingDialog("Státusz hozzáadása...");
         this.statusesService.create(result.status)
+          .subscribe(
+            () => {
+              this.openLoadingDialog("Státuszok betöltése...");
+              this.getStatuses();
+              this.table.renderRows();
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      }
+    });
+  }
+
+  openEditStatusDialog(status: Statuses): void {
+    const dialogRef = this.dialog.open(StatusesEditDialogComponent, {
+      disableClose: true,
+      width: '700px',
+      height: '350px',
+      data: {
+        status: status,
+        editFormSubmitted: false
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.editFormSubmitted) {
+        this.openLoadingDialog("Státusz mentése...");
+        this.statusesService.update(result.status.id, result.status)
+          .subscribe(
+            () => {
+              this.openLoadingDialog("Státuszok betöltése...");
+              this.getStatuses();
+              this.table.renderRows();
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      }
+    });
+  }
+
+  openDeleteStatusesDialog(status: Statuses): void {
+    const dialogRef = this.dialog.open(StatusesDeleteDialogComponent, {
+      disableClose: true,
+      data: {
+        deleteRequired: false,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.deleteRequired) {
+        this.openLoadingDialog("Státusz törlése...");
+        this.statusesService.delete(status.id)
           .subscribe(
             () => {
               this.openLoadingDialog("Státuszok betöltése...");

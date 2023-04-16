@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { DeleteStausesInterface } from 'src/app/interfaces/delete-statuses-interface';
 
 @Component({
   selector: 'app-statuses-delete-dialog',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusesDeleteDialogComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DeleteStausesInterface,
+    private deleteStatusesDialogRef: MatDialogRef<StatusesDeleteDialogComponent>
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  deleteStatus(): void {
+    this.data.deleteRequired = true;
+    this.deleteStatusesDialogRef.close(this.data);
   }
 
 }
