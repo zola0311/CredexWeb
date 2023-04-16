@@ -1,0 +1,49 @@
+<div class="dialogSize">
+  <h1 mat-dialog-title></h1>
+  <mat-dialog-content class="dialog">
+    <h1>Beosztás szerkesztése</h1>
+    <hr />
+    <div class="dialog-body">
+      <form [formGroup]="form">
+        <div class="form-body">
+          <div>
+            <mat-form-field class="field">
+              <mat-label>Név*</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="name"
+                placeholder="Pl: Raktáros"
+              />
+            </mat-form-field>
+            <div class="field" *ngIf="getControl.name.touched">
+              <p *ngIf="getControl.name.errors?.required" class="errorLabel">
+                Mező kitöltése kötelező.
+              </p>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      matTooltip="Beosztás mentése"
+      (click)="updateJob()"
+    >
+      <mat-icon>check</mat-icon>
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      mat-dialog-close
+      matTooltip="Bezárás"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>
+
+

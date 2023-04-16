@@ -5,12 +5,14 @@ import { HomePageComponent } from './components/homePage/home-page/home-page.com
 import { EmployeeManageComponent } from './components/employeesComponents/employee-manage/employee-manage.component';
 import { AbsenceTypesComponent } from './components/absenceTypesComponents/absence-types/absence-types.component';
 import { StatusesComponent } from './components/statusesComponents/statuses/statuses.component';
+import { JobsComponent } from './components/jobsComponents/jobs/jobs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'employees', component: EmployeesComponent },
   { path: 'absenceTypes', component: AbsenceTypesComponent },
   { path: 'statuses', component: StatusesComponent },
+  { path: 'jobs', component: JobsComponent },
   { path: 'employees/manage/:employeeId', component: EmployeeManageComponent },
   { path: 'home', component: HomePageComponent }
 ];

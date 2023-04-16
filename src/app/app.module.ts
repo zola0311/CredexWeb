@@ -71,6 +71,10 @@ import { StatusesComponent } from './components/statusesComponents/statuses/stat
 import { StatusesAddDialogComponent } from './components/dialogs/statuses-add-dialog/statuses-add-dialog.component';
 import { StatusesEditDialogComponent } from './components/dialogs/statuses-edit-dialog/statuses-edit-dialog.component';
 import { StatusesDeleteDialogComponent } from './components/dialogs/statuses-delete-dialog/statuses-delete-dialog.component';
+import { JobsComponent } from './components/jobsComponents/jobs/jobs.component';
+import { JobAddDialogComponent } from './components/dialogs/job-add-dialog/job-add-dialog.component';
+import { JobEditDialogComponent } from './components/dialogs/job-edit-dialog/job-edit-dialog.component';
+import { JobDeleteDialogComponent } from './components/dialogs/job-delete-dialog/job-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +99,11 @@ import { StatusesDeleteDialogComponent } from './components/dialogs/statuses-del
     StatusesComponent,
     StatusesAddDialogComponent,
     StatusesEditDialogComponent,
-    StatusesDeleteDialogComponent
+    StatusesDeleteDialogComponent,
+    JobsComponent,
+    JobAddDialogComponent,
+    JobEditDialogComponent,
+    JobDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
