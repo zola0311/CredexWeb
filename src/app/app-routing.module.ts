@@ -6,6 +6,7 @@ import { EmployeeManageComponent } from './components/employeesComponents/employ
 import { AbsenceTypesComponent } from './components/absenceTypesComponents/absence-types/absence-types.component';
 import { StatusesComponent } from './components/statusesComponents/statuses/statuses.component';
 import { JobsComponent } from './components/jobsComponents/jobs/jobs.component';
+import { UsersComponent } from './components/usersComponents/users/users.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'absenceTypes', component: AbsenceTypesComponent },
   { path: 'statuses', component: StatusesComponent },
   { path: 'jobs', component: JobsComponent },
+  { path: 'users', component: UsersComponent },
   { path: 'employees/manage/:employeeId', component: EmployeeManageComponent },
   { path: 'home', component: HomePageComponent }
 ];

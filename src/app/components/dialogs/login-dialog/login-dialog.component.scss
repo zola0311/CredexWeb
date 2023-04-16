@@ -1,0 +1,45 @@
+.titleDiv {
+  width: 100%;
+  text-align: center;
+  color: #673ab7;
+}
+.fieldDiv {
+  margin-bottom: 30px;
+}
+.field {
+  width: 100%;
+  font-size: 18px;
+}
+.errorLabel {
+  color: red;
+  font-size: 15px;
+}
+.errorDiv {
+  margin-top: 0px;
+}
+.dialog-body {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: grid;
+  justify-content: center;
+}
+.form {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.testDiv {
+  width: 100%;
+  text-align: center;
+  color: gray;
+  font-size: 18px;
+}
+.loginButton {
+  width: 100%;
+  margin-top: 20px;
+}
+.userNotFoundDiv {
+  width: 100%;
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}

@@ -1,25 +1,37 @@
-<mat-toolbar color="primary">
-  <span class="cursor-pointer" routerLink="home">Credex</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <a mat-menu-item href="employees">
-      <span>Munkavállalók</span>
-    </a>
-    <a mat-menu-item href="absenceTypes">
-      <span>Távolmaradás típusok</span>
-    </a>
-    <a mat-menu-item href="statuses">
-      <span>Státuszok</span>
-    </a>
-    <a mat-menu-item href="jobs">
-      <span>Beosztások</span>
-    </a>
-  </mat-menu>
-</mat-toolbar>
+<div *ngIf="userIsLoggedIn">
+  <mat-toolbar color="primary">
+    <span class="cursor-pointer" routerLink="home">Credex</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button (click)="logOff()" matTooltip="Kijelentkezés">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      matTooltip="Menü"
+    >
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <a mat-menu-item href="employees">
+        <span>Munkavállalók</span>
+      </a>
+      <a mat-menu-item href="absenceTypes">
+        <span>Távolmaradás típusok</span>
+      </a>
+      <a mat-menu-item href="statuses">
+        <span>Státuszok</span>
+      </a>
+      <a mat-menu-item href="jobs">
+        <span>Beosztások</span>
+      </a>
+      <a mat-menu-item href="users">
+        <span>Felhasználók</span>
+      </a>
+    </mat-menu>
+  </mat-toolbar>
 
-<div class="container">
-  <router-outlet></router-outlet>
+  <div class="container">
+    <router-outlet></router-outlet>
+  </div>
 </div>

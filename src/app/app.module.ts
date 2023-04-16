@@ -75,6 +75,12 @@ import { JobsComponent } from './components/jobsComponents/jobs/jobs.component';
 import { JobAddDialogComponent } from './components/dialogs/job-add-dialog/job-add-dialog.component';
 import { JobEditDialogComponent } from './components/dialogs/job-edit-dialog/job-edit-dialog.component';
 import { JobDeleteDialogComponent } from './components/dialogs/job-delete-dialog/job-delete-dialog.component';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginDialogComponent } from './components/dialogs/login-dialog/login-dialog.component';
+import { UsersComponent } from './components/usersComponents/users/users.component';
+import { UserAddDialogComponent } from './components/dialogs/user-add-dialog/user-add-dialog.component';
+import { UserEditDialogComponent } from './components/dialogs/user-edit-dialog/user-edit-dialog.component';
+import { UserDeleteDialogComponent } from './components/dialogs/user-delete-dialog/user-delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +109,12 @@ import { JobDeleteDialogComponent } from './components/dialogs/job-delete-dialog
     JobsComponent,
     JobAddDialogComponent,
     JobEditDialogComponent,
-    JobDeleteDialogComponent
+    JobDeleteDialogComponent,
+    LoginDialogComponent,
+    UsersComponent,
+    UserAddDialogComponent,
+    UserEditDialogComponent,
+    UserDeleteDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -191,7 +202,8 @@ import { JobDeleteDialogComponent } from './components/dialogs/job-delete-dialog
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getHungarianPaginatorIntl() },
-    { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' }
+    { provide: MAT_DATE_LOCALE, useValue: 'hu-HU' },
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

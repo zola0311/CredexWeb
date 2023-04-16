@@ -1,0 +1,48 @@
+<div class="titleDiv">
+  <h1>Bejelentkezés</h1>
+  <hr />
+</div>
+<div class="userNotFoundDiv" *ngIf="userNotFound">
+  <p>Hibás email cím vagy jelszó!</p>
+</div>
+<form [formGroup]="form">
+  <div class="form-body">
+    <div class="fieldDiv">
+      <mat-form-field class="field">
+        <mat-label>Email*</mat-label>
+        <input
+          type="text"
+          matInput
+          formControlName="email"
+          placeholder="Pl: teszt@teszt.com"
+        />
+      </mat-form-field>
+      <div class="errorDiv" *ngIf="getControl.email.touched">
+        <p *ngIf="getControl.email.errors?.required" class="errorLabel">
+          Mező kitöltése kötelező.
+        </p>
+      </div>
+    </div>
+    <div class="fieldDiv">
+      <mat-form-field class="field">
+        <mat-label>Jelszó*</mat-label>
+        <input type="password" matInput formControlName="password" />
+      </mat-form-field>
+      <div class="errorDiv" *ngIf="getControl.password.touched">
+        <p *ngIf="getControl.password.errors?.required" class="errorLabel">
+          Mező kitöltése kötelező.
+        </p>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="testDiv">
+  <p>Teszt email: admin <br />Teszt jelszó: admin</p>
+</div>
+<button
+  mat-raised-button
+  color="primary"
+  matTooltip="Bejelentkezés"
+  class="loginButton"
+  (click)="login()"
+><mat-icon>check</mat-icon></button>

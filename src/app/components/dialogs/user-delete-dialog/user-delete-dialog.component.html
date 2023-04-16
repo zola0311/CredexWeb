@@ -1,0 +1,19 @@
+<div class="dialogSize">
+  <h1 mat-dialog-title>Felhasználó törlése</h1>
+  <mat-dialog-content class="dialog">
+    <div class="dialog-body">
+      <div class="titleDiv">
+        <p class="titleLabel">Biztosan törölni szeretnéd a kiválasztott felhasználót?</p>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <hr />
+  <mat-dialog-actions class="actions">
+    <button mat-raised-button color="primary" class="actionButtons" (click)="deleteUser()" matTooltip="Felhasználó törlése">
+      <mat-icon>check</mat-icon>
+    </button>
+    <button mat-raised-button color="accent" class="actionButtons" mat-dialog-close matTooltip="Bezárás">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>
