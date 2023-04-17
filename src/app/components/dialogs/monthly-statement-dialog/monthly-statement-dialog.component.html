@@ -1,0 +1,63 @@
+<h1>Havi kimutatás</h1>
+<hr />
+<div class="searchDiv">
+  <form [formGroup]="form">
+    <mat-form-field class="field">
+      <mat-label>Dátum</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="date"
+        placeholder="Pl: 2023-03"
+      />
+      <mat-hint>Helyes formátum: éééé-hh</mat-hint>
+    </mat-form-field>
+    <button
+      mat-mini-fab
+      color="accent"
+      class="searchButton"
+      matTooltip="Keresés"
+      (click)="search()"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+</div>
+<hr />
+<div id="monthlyStatement" #monthlyStatement>
+  <div class="header">
+    <h1>Havi kimutatás</h1>
+    <h3></h3>
+  </div>
+  <h4>Személyes adatok:</h4>
+  <div class="employeeElement">
+    <table class="employeeTable">
+      <tr>
+        <th>Név:</th>
+        <td>{{this.employee?.name}}</td>
+      </tr>
+      <tr>
+        <th>Beosztás:</th>
+        <td>{{this.employee?.jobs.name}}</td>
+      </tr>
+    </table>
+  </div>
+  <h4>Juttatások:</h4>
+  <div class="allowanceElement">
+    <table class="allowancesTable">
+      <tr *ngFor="let allowance of allowancesOfEmployees">
+        <th>{{allowance.allowanceTypes?.name}}:</th>
+        <td>{{allowance.value}} Ft</td>
+      </tr>
+    </table>
+  </div>
+  <h4>Távolmaradások:</h4>
+  <div class="absencesElement" *ngIf="absencesOfEmployee.length > 0">
+    <table class="absencesTable">
+      <tr *ngFor="let absence of absencesOfEmployee">
+        <th>{{absence.date}}:</th>
+        <td>{{absence.absenceTypes?.name}}</td>
+      </tr>
+    </table>
+  </div>
+</div>

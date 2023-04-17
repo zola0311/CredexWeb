@@ -59,6 +59,15 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="monthlyStatement" class="tableButtonColumn">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element" class="tableButtonColumn">
+        <button mat-raised-button color="accent" matTooltip="Munkavállaló havi kimutatás" (click)="openEmployeeMonthlyStatementDialog(element.employeeId)">
+          <mat-icon> event_available</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="detailsColumn" class="tableButtonColumn">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="tableButtonColumn">

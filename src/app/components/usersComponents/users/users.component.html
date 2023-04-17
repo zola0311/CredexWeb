@@ -26,6 +26,11 @@
       <td mat-cell *matCellDef="let element">{{ element.email }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="role">
+      <th mat-header-cell *matHeaderCellDef>Jogosultság</th>
+      <td mat-cell *matCellDef="let element">{{ element.roles.name }}</td>
+    </ng-container>
+
     <ng-container matColumnDef="editColumn" class="tableButtonColumn">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element" class="tableButtonColumn">

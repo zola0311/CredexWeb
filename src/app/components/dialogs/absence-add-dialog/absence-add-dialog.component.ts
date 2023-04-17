@@ -32,7 +32,6 @@ export class AbsenceAddDialogComponent implements OnInit {
   ngOnInit(): void {
     this.data.date = null;
     this.data.absenceTypeId = null;
-
     this.getAbsenceTypes();
   }
 

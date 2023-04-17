@@ -81,6 +81,7 @@ import { UsersComponent } from './components/usersComponents/users/users.compone
 import { UserAddDialogComponent } from './components/dialogs/user-add-dialog/user-add-dialog.component';
 import { UserEditDialogComponent } from './components/dialogs/user-edit-dialog/user-edit-dialog.component';
 import { UserDeleteDialogComponent } from './components/dialogs/user-delete-dialog/user-delete-dialog.component';
+import { MonthlyStatementDialogComponent } from './components/dialogs/monthly-statement-dialog/monthly-statement-dialog.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { UserDeleteDialogComponent } from './components/dialogs/user-delete-dial
     UsersComponent,
     UserAddDialogComponent,
     UserEditDialogComponent,
-    UserDeleteDialogComponent
+    UserDeleteDialogComponent,
+    MonthlyStatementDialogComponent
   ],
   imports: [
     BrowserModule,

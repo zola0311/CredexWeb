@@ -14,6 +14,7 @@ import { EmployeeDeleteDialogComponent } from '../../dialogs/employee-delete-dia
 import { EmployeeDeletedDialogComponent } from '../../dialogs/employee-deleted-dialog/employee-deleted-dialog.component';
 import { EmployeeEditDialogComponent } from '../../dialogs/employee-edit-dialog/employee-edit-dialog.component';
 import { LoadingDialogComponent } from '../../dialogs/loading-dialog/loading-dialog.component';
+import { MonthlyStatementDialogComponent } from '../../dialogs/monthly-statement-dialog/monthly-statement-dialog.component';
 
 @Component({
   selector: 'app-employees',
@@ -29,12 +30,14 @@ export class EmployeesComponent implements OnInit {
     'status',
     'editColumn',
     'detailsColumn',
+    'monthlyStatement',
     'deleteColumn',
   ];
   loadingDialogRef: MatDialogRef<LoadingDialogComponent>;
   employeeAddDialogRef: MatDialogRef<EmployeeAddDialogComponent>;
   employeeEditDialogRef: MatDialogRef<EmployeeEditDialogComponent>;
   employeeDeletedDialogRef: MatDialogRef<EmployeeDeletedDialogComponent>;
+  employeeMonthlyStatementDialogRef: MatDialogRef<MonthlyStatementDialogComponent>;
   @ViewChild('employeeTable') table: MatTable<Employees>;
   @ViewChild('paginator') paginator: MatPaginator;
   constructor(
@@ -216,6 +219,17 @@ export class EmployeesComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  openEmployeeMonthlyStatementDialog(employeeId: number): void {
+    const dialogRef = this.dialog.open(MonthlyStatementDialogComponent, {
+      disableClose: true,
+      width: '100%',
+      height: '80%',
+      data: {
+        employeeId: employeeId
+      },
     });
   }
 

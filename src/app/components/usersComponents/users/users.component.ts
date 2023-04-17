@@ -19,6 +19,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'email',
+    'role',
     'editColumn',
     'deleteColumn',
   ];
