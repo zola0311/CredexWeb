@@ -67,6 +67,7 @@ export class LoginDialogComponent implements OnInit {
       );
       if (user.length > 0) {
         this.data.loggedIn = true;
+        this.data.user = user[0];
         this.loginDialogRef.close(this.data);
       } else {
         this.userNotFound = true;

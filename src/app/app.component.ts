@@ -3,6 +3,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginDialogComponent } from './components/dialogs/login-dialog/login-dialog.component';
 import { Users } from './models/usersModel/users.model';
+import { GlobalVariables } from './helpers/globalVariables/global-variables';
+import { LoggedUserService } from './services/loggedUserServices/logged-user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +15,9 @@ export class AppComponent implements OnInit {
   title = 'Credex';
   userIsLoggedInCookie: string = "";
   userIsLoggedIn: boolean = false;
+  user: Users;
   loadingDialogRef: MatDialogRef<LoginDialogComponent>;
-  constructor(private cookieService: CookieService, private dialog: MatDialog) {}
+  constructor(private cookieService: CookieService, private dialog: MatDialog, private loggedUserService: LoggedUserService) {}
 
   ngOnInit(): void {
     this.getUserLoggedInCookie();
@@ -47,12 +50,15 @@ export class AppComponent implements OnInit {
       width: '500px',
       height: '550px',
       data: {
+        user: Users,
         loggedIn: false,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if(result.loggedIn) {
+        this.user = result.user;
+        this.loggedUserService.setLoggedUser(this.user);
         this.userIsLoggedIn = true;
         this.cookieService.set('userLoggedIn', 'true');
       }
