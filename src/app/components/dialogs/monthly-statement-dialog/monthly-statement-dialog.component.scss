@@ -9,24 +9,24 @@
 .searchButton {
   margin-left: 10px;
 }
-.employeeElement {
+.details {
   width: 100%;
   text-align: center;
 }
-.employeeTable {
+.detailsTable {
   width: 100%;
 }
-.allowanceElement {
-  width: 100%;
+.employeerSignature {
+  border-top: 1px solid;
+  width: 250px;
+  margin-top: 100px;
+  float: left;
   text-align: center;
 }
-.allowancesTable {
-  width: 100%;
-}
-.absencesElement {
-  width: 100%;
+.employeeSignature {
+  border-top: 1px solid;
+  width: 250px;
+  margin-top: 100px;
+  float: right;
   text-align: center;
-}
-.absencesTable {
-  width: 100%;
 }

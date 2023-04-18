@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MonthlyStatementInterface } from 'src/app/interfaces/monthly-statement-interface';
@@ -9,6 +9,11 @@ import { MonthlyStatementsViewModel } from 'src/app/models/viewModels/monthlySta
 import { AbsencesOfEmployeesService } from 'src/app/services/absencesOfEmployeesService/absences-of-employees.service';
 import { AllowancesOfEmployeesService } from 'src/app/services/allowancesOfEmployeesServices/allowances-of-employees.service';
 import { EmployeesService } from 'src/app/services/employeesServices/employees.service';
+import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import htmlToPdfmake from 'html-to-pdfmake';
 
 
 @Component({
@@ -23,6 +28,7 @@ export class MonthlyStatementDialogComponent implements OnInit {
   monthlyStatement: MonthlyStatementsViewModel;
   absencesOfEmployees: AbsencesOfEmployees[];
   absencesOfEmployee: AbsencesOfEmployees[] = [];
+  @ViewChild('monthlyStatement') pdfTable: ElementRef;
   constructor(
     private formBuilder: FormBuilder,
     private employeesService: EmployeesService,
@@ -37,6 +43,21 @@ export class MonthlyStatementDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployee(this.data.employeeId);
+  }
+
+  public downloadAsPDF() {
+    const doc = new jsPDF("p", "mm", "a4");
+    const pdfTable = this.pdfTable.nativeElement;
+
+    var html = htmlToPdfmake(pdfTable.innerHTML);
+    doc.html(pdfTable.innerHTML, {
+      callback: function(doc) {
+        doc.save("test.pdf");
+      }
+    });
+
+    // const documentDefinition = { content: html };
+    // pdfMake.createPdf(documentDefinition).open();
   }
 
   search(): void {
