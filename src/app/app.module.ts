@@ -59,7 +59,6 @@ import { EmployeeDeletedDialogComponent } from './components/dialogs/employee-de
 import { EmployeeDeleteDialogComponent } from './components/dialogs/employee-delete-dialog/employee-delete-dialog.component';
 import { EmployeeManageComponent } from './components/employeesComponents/employee-manage/employee-manage.component';
 import { EmployeeDetailsComponentsComponent } from './components/employeesComponents/employee-details-components/employee-details-components.component';
-import { EmployeeAbsenceComponentsComponent } from './components/employeesComponents/employee-absence-components/employee-absence-components.component';
 import { AbsenceAddDialogComponent } from './components/dialogs/absence-add-dialog/absence-add-dialog.component';
 import { AbsenceEditDialogComponent } from './components/dialogs/absence-edit-dialog/absence-edit-dialog.component';
 import { AbsenceDeleteDialogComponent } from './components/dialogs/absence-delete-dialog/absence-delete-dialog.component';
@@ -82,6 +81,7 @@ import { UserAddDialogComponent } from './components/dialogs/user-add-dialog/use
 import { UserEditDialogComponent } from './components/dialogs/user-edit-dialog/user-edit-dialog.component';
 import { UserDeleteDialogComponent } from './components/dialogs/user-delete-dialog/user-delete-dialog.component';
 import { MonthlyStatementDialogComponent } from './components/dialogs/monthly-statement-dialog/monthly-statement-dialog.component';
+import { EmployeeAbsenceComponentsComponent } from './components/employeesComponents/employee-absence-components/employee-absence-components.component';
 
 @NgModule({
   declarations: [
