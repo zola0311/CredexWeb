@@ -16,8 +16,7 @@ export class AppComponent implements OnInit {
   userIsLoggedInCookie: string = "";
   userIsLoggedIn: boolean = false;
   user: Users;
-  loadingDialogRef: MatDialogRef<LoginDialogComponent>;
-  constructor(private cookieService: CookieService, private dialog: MatDialog, private loggedUserService: LoggedUserService) {}
+  constructor(private cookieService: CookieService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getUserLoggedInCookie();
@@ -58,7 +57,6 @@ export class AppComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if(result.loggedIn) {
         this.user = result.user;
-        this.loggedUserService.setLoggedUser(this.user);
         this.userIsLoggedIn = true;
         this.cookieService.set('userLoggedIn', 'true');
       }

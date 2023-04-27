@@ -14,13 +14,6 @@ import { Md5 } from 'ts-md5';
 export class LoginDialogComponent implements OnInit {
   form: FormGroup;
   users: Users[] = [];
-  user: Users = {
-    id: 0,
-    email: null,
-    password: null,
-    roleId: 0,
-    roles: null,
-  };
   userNotFound: boolean = false;
   constructor(
     private loginDialogRef: MatDialogRef<LoginDialogComponent>,

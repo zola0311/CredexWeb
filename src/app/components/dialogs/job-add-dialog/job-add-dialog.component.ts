@@ -33,7 +33,7 @@ export class JobAddDialogComponent implements OnInit {
     if(this.form.valid) {
       this.job.name = this.form.controls.name.value;
       this.data.job = this.job;
-      this.closeStatusesDialog();
+      this.closeJobAddDialog();
     }
   }
 
@@ -41,7 +41,7 @@ export class JobAddDialogComponent implements OnInit {
     return this.form.controls;
   }
 
-  closeStatusesDialog() {
+  closeJobAddDialog() {
     this.addJobsDialogRef.close(this.data);
   }
 
